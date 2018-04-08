@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AWPrint"
+             x:Class="AWPrint.MainPage"
+                  Title="Page 1"
+                  MasterBehavior="Popover">
+
+    <MasterDetailPage.Master>
+        <ContentPage Padding="10" BackgroundColor="Gray" Title="Opciones">
+            <ContentPage.Content>
+                <StackLayout Margin="5,30,5,5">
+                    <Label Text="Opciones"></Label>
+                    <Button Text="Imprimir" BackgroundColor="White"
+                            Image="ic_settings"
+                            Clicked="BtnImprimirClicked"/>
+                    <Button Text="Ajustes" BackgroundColor="White" 
+                            Clicked="BtnAjustesClicked"/>
+                </StackLayout>
+                
+            </ContentPage.Content>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    
+    <MasterDetailPage.Detail>
+        <ContentPage Padding="10">
+            <ContentPage.Content>
+                <StackLayout Margin="5,30,5,5">
+                    <Label Text="Detail Page"></Label>
+                </StackLayout>
+
+            </ContentPage.Content>
+        </ContentPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
