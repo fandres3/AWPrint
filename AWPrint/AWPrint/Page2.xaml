@@ -5,9 +5,20 @@
              Title="Ajustes">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="222222222222"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Ubicación del fichero" FontSize="Medium"/>
+            <Entry x:Name="txtCaminoAFichero" 
+                   Text="Ubicación del fichero" 
+                   Placeholder="Indique ubicación"
+                   Completed="On_Completed"
+                    FontSize="Medium"
+                  />
+            <Label Text="Fichero" FontSize="Medium"/>
+            <Entry x:Name="txtFichero" 
+                   Text="Nombre del fichero a imprimir" 
+                   Placeholder="Nombre"
+                   Completed="On_Completed"
+                     FontSize="Medium"
+                  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

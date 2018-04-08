@@ -13,13 +13,20 @@ namespace AWPrint
 		{
 			InitializeComponent();
 
-			MainPage = new AWPrint.MainPage();
+            if (!Application.Current.Properties.ContainsKey("CaminoAFichero"))
+                { Application.Current.Properties["CaminoAFichero"] = "/storage/"; }
+
+            if (!Application.Current.Properties.ContainsKey("Fichero"))
+                { Application.Current.Properties["Fichero"] = "fichero.txt"; }
+
+            MainPage = new AWPrint.MainPage();
 		}
 
 		protected override void OnStart ()
 		{
-			// Handle when your app starts
-		}
+            // Handle when your app starts
+
+        }
 
 		protected override void OnSleep ()
 		{
