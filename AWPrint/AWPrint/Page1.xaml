@@ -4,12 +4,15 @@
              x:Class="AWPrint.Page1"
              Title="Imprimir">
     <ContentPage.Content>
-        <StackLayout>
-            <Label x:Name="lblPage1" Text="11111111111"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="5,30,5,5">
             <Button Text="Imprime"
-                    Clicked="btnImprimirClicked"/>
+                    Clicked="BtnImprimirClicked"/>
+            <Label x:Name="lblStatus" Text=""
+                    FontSize="Medium"
+                    VerticalOptions="EndAndExpand"
+                    HorizontalOptions="Center"
+                    TextColor="Red"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

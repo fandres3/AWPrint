@@ -19,6 +19,13 @@
                    Completed="On_Completed"
                      FontSize="Medium"
                   />
+            <Label Text="Nombre impresora BT" FontSize="Medium"/>
+            <Entry x:Name="txtImpresora" 
+                   Text="Nombre impresora Bluetooth" 
+                   Placeholder="Nombre impresora Bluetooth"
+                   Completed="On_Completed"
+                     FontSize="Medium"
+                  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
