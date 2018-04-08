@@ -16,10 +16,12 @@ namespace AWPrint
             IsPresented = false;
         }
 
+
         void BtnImprimirClicked(object sender, System.EventArgs e)
         {
             Detail = new NavigationPage(new Page1());
             IsPresented = false;
+
         }
 
         void BtnAjustesClicked(object sender, System.EventArgs e)

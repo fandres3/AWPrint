@@ -5,9 +5,11 @@
              Title="Imprimir">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="11111111111"
+            <Label x:Name="lblPage1" Text="11111111111"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Button Text="Imprime"
+                    Clicked="btnImprimirClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

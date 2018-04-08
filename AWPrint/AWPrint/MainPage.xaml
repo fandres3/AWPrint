@@ -10,11 +10,13 @@
         <ContentPage Padding="10" BackgroundColor="Gray" Title="Opciones">
             <ContentPage.Content>
                 <StackLayout Margin="5,30,5,5">
+                    <Image Source="anisoftware_logo_peque.png"/>
                     <Label Text="Opciones"></Label>
                     <Button Text="Imprimir" BackgroundColor="White"
-                            Image="ic_settings"
+                            Image="ic_printer"
                             Clicked="BtnImprimirClicked"/>
                     <Button Text="Ajustes" BackgroundColor="White" 
+                            Image="ic_settings"
                             Clicked="BtnAjustesClicked"/>
                 </StackLayout>
                 

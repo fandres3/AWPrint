@@ -16,5 +16,16 @@ namespace AWPrint
 		{
 			InitializeComponent ();
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+           
+            base.OnAppearing();
+        }
+
+        void BtnImprimirClicked(object sender, System.EventArgs e)
+        {
+
+        }
+    }
 }
