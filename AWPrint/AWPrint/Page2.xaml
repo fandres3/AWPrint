@@ -10,22 +10,44 @@
                    Text="Ubicación del fichero" 
                    Placeholder="Indique ubicación"
                    Completed="On_Completed"
-                    FontSize="Medium"
-                  />
+                    FontSize="Medium"/>
             <Label Text="Fichero" FontSize="Medium"/>
             <Entry x:Name="txtFichero" 
                    Text="Nombre del fichero a imprimir" 
                    Placeholder="Nombre"
                    Completed="On_Completed"
-                     FontSize="Medium"
-                  />
+                     FontSize="Medium"/>
             <Label Text="Nombre impresora BT" FontSize="Medium"/>
             <Entry x:Name="txtImpresora" 
                    Text="Nombre impresora Bluetooth" 
                    Placeholder="Nombre impresora Bluetooth"
                    Completed="On_Completed"
-                     FontSize="Medium"
-                  />
+                     FontSize="Medium"/>
+            <Label Text="FTP Servidor" FontSize="Medium"/>
+            <Entry x:Name="txtFTPServer" 
+                   Text="FTP Servidor" 
+                   Placeholder="Servidor FTP"
+                   Completed="On_Completed"
+                     FontSize="Medium"/>
+            <Label Text="FTP Usuario" FontSize="Medium"/>
+            <Entry x:Name="txtFTPUsuario" 
+                   Text="FTP Usuario" 
+                   Placeholder="Usuario FTP"
+                   Completed="On_Completed"
+                     FontSize="Medium"/>
+            <Label Text="FTP Password" FontSize="Medium"/>
+            <Entry x:Name="txtFTPPassword" 
+                   Text="FTP Password" 
+                   Placeholder="Password FTP"
+                   IsPassword="True"
+                   Completed="On_Completed"
+                     FontSize="Medium"/>
+            <StackLayout>
+                <Label Text="FTP SSL" FontSize="Medium" HorizontalOptions="Start"/>
+                <Switch HorizontalOptions="EndAndExpand"></Switch>
+            </StackLayout>  
         </StackLayout>
+
+
     </ContentPage.Content>
 </ContentPage>
