@@ -9,16 +9,16 @@ using Xamarin.Forms;
 
 namespace AWPrint
 {
-	public partial class App : Application
-	{
+    public partial class App : Application
+    {
         public static BluetoothManager mBTManager;
         public static BluetoothAdapter mBluetoothAdapter;
         public static BluetoothDevice mDevice;
         public static BluetoothSocket mSocket;
 
-        public App ()
-		{
-			InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
 
             IniciaSettings();
 
@@ -49,7 +49,7 @@ namespace AWPrint
                 {
                     throw new Exception("No encuentro adaptador Bluetooth.");
                 }
-         
+
                 if (AWPrint.App.mBluetoothAdapter == null)
                 {
                     throw new Exception("No encuentro adaptador Bluetooth.");
@@ -59,7 +59,7 @@ namespace AWPrint
 
                 var Impresora = Application.Current.Properties["Impresora"] as string;
                 AWPrint.App.mDevice = (from bd in AWPrint.App.mBluetoothAdapter.BondedDevices
-                                       where bd.Name == Impresora 
+                                       where bd.Name == Impresora
                                        select bd).FirstOrDefault();
 
                 if (AWPrint.App.mDevice == null)
@@ -89,23 +89,23 @@ namespace AWPrint
 
                 throw;
             }
-           
+
 
         }
-        protected override void OnStart ()
-		{
+        protected override void OnStart()
+        {
             // Handle when your app starts
 
         }
 
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+    }
 }

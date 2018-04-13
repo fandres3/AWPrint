@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AWPrint.SettingsFTPPage"
+             Title="Ajustes" Disappearing="GrabaSettings">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout >
+                <Label Text="Datos FTP" FontSize="Medium" TextColor="Blue" />
+                <Label Text="FTP Servidor" FontSize="Small"/>
+                <Entry x:Name="txtFTPServer" 
+                   Text="FTP Servidor" 
+                   Placeholder="Servidor FTP"
+                   FontSize="Small"/>
+                <Label Text="FTP Usuario" FontSize="Small"/>
+                <Entry x:Name="txtFTPUser" 
+                   Text="FTP Usuario" 
+                   Placeholder="Usuario FTP"
+                   FontSize="Small"/>
+                <Label Text="FTP Password" FontSize="Small"/>
+                <Entry x:Name="txtFTPPassword" 
+                   Text="FTP Password" 
+                   Placeholder="Password FTP"
+                   IsPassword="True"
+                   FontSize="Small"/>
+                <Label Text="FTP Carpeta Remota" FontSize="Small"/>
+                <Entry x:Name="txtFTPCarpeta" 
+                   Text="FTP Carpeta remota" 
+                   Placeholder="Carpeta remota FTP"
+                   FontSize="Small"/>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="FTP SSL" FontSize="Small" HorizontalOptions="Start"/>
+                    <Switch x:Name="swFTPSSL" HorizontalOptions="EndAndExpand"></Switch>
+                    <StackLayout  Orientation="Horizontal">
+                        <Button Text="Test FTP" Clicked="BtnPruebaFTPClicked" HorizontalOptions="StartAndExpand"></Button>
+                        <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClicked" HorizontalOptions="EndAndExpand"></Button>
+                    </StackLayout>
+
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

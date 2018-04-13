@@ -14,7 +14,7 @@ using Java.Util;
 namespace AWPrint
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Page2 : ContentPage
+    public partial class SettingsGeneralPage : ContentPage
     {
 
         private BluetoothSocket _socket;
@@ -22,14 +22,14 @@ namespace AWPrint
         System.IO.Stream mmOutputStream;
         System.IO.Stream mmInputStream;
 
-        public Page2()
+        public SettingsGeneralPage()
         {
             InitializeComponent();
             CargaSettings();
-          
+
 
         }
-        
+
         void CargaSettings()
         {
             if (Application.Current.Properties.ContainsKey("CaminoAFichero"))
@@ -38,19 +38,7 @@ namespace AWPrint
                 txtFichero.Text = Application.Current.Properties["Fichero"] as string;
             if (Application.Current.Properties.ContainsKey("Impresora"))
                 txtImpresora.Text = Application.Current.Properties["Impresora"] as string;
-            if (Application.Current.Properties.ContainsKey("FTPServer"))
-                txtFTPServer.Text = Application.Current.Properties["FTPServer"] as string;
-            if (Application.Current.Properties.ContainsKey("FTPUser"))
-                txtFTPUser.Text = Application.Current.Properties["FTPUser"] as string;
-            if (Application.Current.Properties.ContainsKey("FTPPassword"))
-                txtFTPPassword.Text = Application.Current.Properties["FTPPassword"] as string;
-            if (Application.Current.Properties.ContainsKey("FTPCarpeta"))
-                txtFTPCarpeta.Text = Application.Current.Properties["FTPCarpeta"] as string;
-            if (Application.Current.Properties.ContainsKey("FTPSSL"))
-            {
-                String sw = Application.Current.Properties["FTPSSL"] as string;
-                swFTPSSL.IsToggled = (sw != "0");
-            }
+         
         }
 
         void GrabaSettings(object sender, EventArgs args)
@@ -58,43 +46,10 @@ namespace AWPrint
             Application.Current.Properties["CaminoAFichero"] = txtCaminoAFichero.Text;
             Application.Current.Properties["Fichero"] = txtFichero.Text;
             Application.Current.Properties["Impresora"] = txtImpresora.Text;
-            Application.Current.Properties["FTPServer"] = txtFTPServer.Text;
-            Application.Current.Properties["FTPUser"] = txtFTPUser.Text;
-            Application.Current.Properties["FTPPassword"] = txtFTPPassword.Text;
-            Application.Current.Properties["FTPCarpeta"] = txtFTPCarpeta.Text;
-            Application.Current.Properties["FTPSSL"] = (swFTPSSL.IsToggled == true) ? "1" : "0";
             App.Current.SavePropertiesAsync();
         }
 
-        void BtnPruebaFTPClicked(object sender, EventArgs args)
-        {
-            var uri = new Uri("ftp://" + Application.Current.Properties["FTPServer"] + "/test.txt");
-
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-            request.EnableSsl = swFTPSSL.IsToggled;
-            request.Credentials = new NetworkCredential(txtFTPUser.Text, txtFTPPassword.Text);
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-
-            Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
-            int dataLength = (int)request.GetResponse().ContentLength;
-
-            byte[] buffer = new byte[2048];
-            String fileName = Path.Combine(txtCaminoAFichero.Text, txtFichero.Text);
-            FileStream fs = new FileStream(fileName, FileMode.Create);
-            int ReadCount = responseStream.Read(buffer, 0, buffer.Length);
-            while (ReadCount > 0)
-            {
-                fs.Write(buffer, 0, ReadCount);
-                ReadCount = responseStream.Read(buffer, 0, buffer.Length);
-            }
-            //      ResponseDescription = response.StatusDescription;
-            fs.Close();
-            reader.Close();
-            response.Close();
-
-        }
+     
 
 
         void BtnPruebaImpresionClicked(object sender, EventArgs args)
@@ -102,7 +57,7 @@ namespace AWPrint
 
 
 
-        BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
+            BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
             if (adapter == null)
                 throw new Exception("No Bluetooth adapter found.");
 
@@ -141,6 +96,6 @@ namespace AWPrint
         {
             base.OnDisappearing();
         }
-        
+
     }
 }

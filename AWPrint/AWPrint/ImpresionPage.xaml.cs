@@ -15,9 +15,9 @@ using Java.Util;
 namespace AWPrint
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Page1 : ContentPage
+	public partial class ImpresionPage : ContentPage
 	{
-		public Page1 (String MensajeInicial)
+		public ImpresionPage(String MensajeInicial)
 		{
 			InitializeComponent ();
             lblStatus.Text = MensajeInicial;

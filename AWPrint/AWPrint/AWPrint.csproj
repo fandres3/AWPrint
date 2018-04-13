@@ -24,11 +24,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Page1.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    <EmbeddedResource Update="ImpresionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Page2.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    <EmbeddedResource Update="SettingsPage0.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsFTPPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsGeneralPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

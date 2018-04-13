@@ -5,33 +5,74 @@
              x:Class="AWPrint.MainPage"
                   Title="Page 1"
                   MasterBehavior="Popover">
+  
+<MasterDetailPage.Master>
+    <ContentPage Title="Menu"
+                 BackgroundColor="#e8e8e8">
 
-    <MasterDetailPage.Master>
-        <ContentPage Padding="10" BackgroundColor="Gray" Title="Opciones">
-            <ContentPage.Content>
-                <StackLayout Margin="5,30,5,5">
-                    <Image Source="anisoftware_logo_peque.png"/>
-                    <Label Text="Opciones"></Label>
-                    <Button Text="Imprimir" BackgroundColor="White"
-                            Image="ic_printer"
-                            Clicked="BtnImprimirClicked"/>
-                    <Button Text="Ajustes" BackgroundColor="White" 
-                            Image="ic_settings"
-                            Clicked="BtnAjustesClicked"/>
-                </StackLayout>
-                
-            </ContentPage.Content>
-        </ContentPage>
-    </MasterDetailPage.Master>
-    
-    <MasterDetailPage.Detail>
-        <ContentPage Padding="10">
-            <ContentPage.Content>
-                <StackLayout Margin="5,30,5,5">
-                    <Label Text="Detail Page"></Label>
-                </StackLayout>
+        <StackLayout Orientation="Vertical">
 
-            </ContentPage.Content>
-        </ContentPage>
-    </MasterDetailPage.Detail>
+            <!-- 
+             This StackLayout you can use for other
+             data that you want to have in your menu drawer
+        -->
+            <StackLayout BackgroundColor="#e74c3c"
+                     HeightRequest="75">
+                <Image Source="anisoftware_logo_peque.png"/>
+                <Label Text="Some Text title"
+                 FontSize="20"
+                 VerticalOptions="CenterAndExpand"
+                 TextColor="White"
+                 HorizontalOptions="Center"/>
+            </StackLayout>
+
+            <ListView x:Name="navigationDrawerList"
+                  RowHeight="60"
+                  SeparatorVisibility="None"
+                  BackgroundColor="#e8e8e8"
+                  ItemSelected="OnMenuItemSelected">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <!-- Main design for our menu items -->
+                            <StackLayout VerticalOptions="FillAndExpand"
+                             Orientation="Horizontal"
+                             Padding="20,10,0,10"
+                             Spacing="20">
+
+                                <Image Source="{Binding Icon}"
+                         WidthRequest="40"
+                         HeightRequest="40"
+                         VerticalOptions="Center" />
+
+                                <Label Text="{Binding Title}"
+                         FontSize="Medium"
+                         VerticalOptions="Center"
+                         TextColor="Black"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+    </ContentPage>
+</MasterDetailPage.Master>
+
+<MasterDetailPage.Detail>
+    <NavigationPage>
+
+    </NavigationPage>
+</MasterDetailPage.Detail>
 </MasterDetailPage>
+    
+    
+    
+    
+    
+     
+    
+    
+    
