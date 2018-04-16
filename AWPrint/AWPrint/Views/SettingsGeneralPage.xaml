@@ -24,6 +24,5 @@
                    FontSize="Small"/>
             </StackLayout>
         </ScrollView>
-
     </ContentPage.Content>
 </ContentPage>

@@ -26,8 +26,6 @@ namespace AWPrint
         {
             InitializeComponent();
             CargaSettings();
-
-
         }
 
         void CargaSettings()

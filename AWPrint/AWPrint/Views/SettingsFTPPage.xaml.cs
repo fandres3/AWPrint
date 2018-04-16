@@ -136,9 +136,6 @@ namespace AWPrint
 
         void BtnPruebaImpresionClicked(object sender, EventArgs args)
         {
-
-
-
             BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
             if (adapter == null)
                 throw new Exception("No Bluetooth adapter found.");

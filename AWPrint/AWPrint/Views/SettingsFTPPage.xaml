@@ -32,10 +32,10 @@
                     <Switch x:Name="swFTPSSL" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
             <StackLayout  Orientation="Horizontal">
-                <Button Text="Test FTP" Clicked="BtnPruebaFTPClicked" HorizontalOptions="StartAndExpand"></Button>
-                <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClicked" HorizontalOptions="EndAndExpand"></Button>
+                <Button Text="Test FTP" Clicked="BtnPruebaFTPClicked" HorizontalOptions="CenterAndExpand"></Button>
+                <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClicked" HorizontalOptions="CenterAndExpand"></Button>
             </StackLayout>
-            <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand">
+            <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand">
             <Label x:Name="lblStatus" Text=""
                         FontSize="Medium"
                         HorizontalOptions="Center"
