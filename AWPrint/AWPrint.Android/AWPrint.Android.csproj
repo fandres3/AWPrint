@@ -113,9 +113,12 @@
     <AndroidResource Include="Resources\drawable\anisoftware_logo_peque.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\values\styles.xml">
+    <AndroidResource Include="Resources\values\styles.xml">
       <SubType>Designer</SubType>
-    </None>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\colors.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

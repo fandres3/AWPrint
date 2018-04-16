@@ -33,7 +33,7 @@ namespace AWPrint
             navigationDrawerList.ItemsSource = menuList;
 
 
-            Detail = new NavigationPage(new ImpresionPage(MensajeInicial));
+            Detail = new NavigationPage(new ImpresionPage());
             IsPresented = false;
         }
 
@@ -50,7 +50,7 @@ namespace AWPrint
 
         void BtnImprimirClicked(object sender, System.EventArgs e)
         {
-            Detail = new NavigationPage(new ImpresionPage("Imprimiendo..."));
+            Detail = new NavigationPage(new ImpresionPage());
             IsPresented = false;
 
         }

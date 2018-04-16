@@ -4,8 +4,7 @@
              x:Class="AWPrint.SettingsFTPPage"
              Title="Ajustes" Disappearing="GrabaSettings">
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout >
+              <StackLayout Margin="5,5,0,0">
                 <Label Text="Datos FTP" FontSize="Medium" TextColor="Blue" />
                 <Label Text="FTP Servidor" FontSize="Small"/>
                 <Entry x:Name="txtFTPServer" 
@@ -31,14 +30,18 @@
                 <StackLayout Orientation="Horizontal">
                     <Label Text="FTP SSL" FontSize="Small" HorizontalOptions="Start"/>
                     <Switch x:Name="swFTPSSL" HorizontalOptions="EndAndExpand"></Switch>
-                    <StackLayout  Orientation="Horizontal">
-                        <Button Text="Test FTP" Clicked="BtnPruebaFTPClicked" HorizontalOptions="StartAndExpand"></Button>
-                        <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClicked" HorizontalOptions="EndAndExpand"></Button>
-                    </StackLayout>
-
                 </StackLayout>
+            <StackLayout  Orientation="Horizontal">
+                <Button Text="Test FTP" Clicked="BtnPruebaFTPClicked" HorizontalOptions="StartAndExpand"></Button>
+                <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClicked" HorizontalOptions="EndAndExpand"></Button>
             </StackLayout>
-        </ScrollView>
-
+            <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand">
+            <Label x:Name="lblStatus" Text=""
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        TextColor="Red"/>
+        </StackLayout>
+     </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+    

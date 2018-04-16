@@ -17,12 +17,12 @@ namespace AWPrint
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ImpresionPage : ContentPage
 	{
-		public ImpresionPage(String MensajeInicial)
+		public ImpresionPage()
 		{
 			InitializeComponent ();
-            lblStatus.Text = MensajeInicial;
-            if (MensajeInicial.StartsWith("ERROR:")) lblStatus.TextColor = Color.Red;
-                else lblStatus.TextColor = Color.Green;
+         //   lblStatus.Text = MensajeInicial;
+         //   if (MensajeInicial.StartsWith("ERROR:")) lblStatus.TextColor = Color.Red;
+         //       else lblStatus.TextColor = Color.Green;
 		}
 
         protected override void OnAppearing()

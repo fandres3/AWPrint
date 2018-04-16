@@ -64,8 +64,31 @@ namespace AWPrint
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.EnableSsl = swFTPSSL.IsToggled;
-            request.Credentials = new NetworkCredential(txtFTPUser.Text, txtFTPPassword.Text);
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            try
+            {
+                request.Credentials = new NetworkCredential(txtFTPUser.Text, txtFTPPassword.Text);
+
+            }
+            catch (Exception e)
+            {
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = e.Message;
+                return;
+            }
+
+            FtpWebResponse response;
+            try
+            {
+                response = (FtpWebResponse)request.GetResponse();
+
+            }
+            catch (System.Net.WebException e)
+            {
+
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = e.Message;
+                return;
+            }
 
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
@@ -73,9 +96,27 @@ namespace AWPrint
 
             byte[] buffer = new byte[2048];
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
+            if (!Directory.Exists(camino))
+            {
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = "No existe " + camino;
+                return;
+            }
+
             String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino,fichero);
-            FileStream fs = new FileStream(fileName, FileMode.Create);
+
+            FileStream fs;
+            try
+            {
+                fs = new FileStream(fileName, FileMode.Create);
+            }
+            catch (System.IO.IOException e)
+            {
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = e.Message;
+                return;
+            }
             int ReadCount = responseStream.Read(buffer, 0, buffer.Length);
             while (ReadCount > 0)
             {
@@ -87,6 +128,9 @@ namespace AWPrint
             reader.Close();
             response.Close();
 
+            lblStatus.TextColor = Color.Green;
+            lblStatus.Text = "Correcto";
+            return;
         }
 
 
@@ -133,6 +177,12 @@ namespace AWPrint
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            lblStatus.Text = "";
         }
 
     }
