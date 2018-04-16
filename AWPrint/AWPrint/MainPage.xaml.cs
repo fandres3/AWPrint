@@ -1,5 +1,5 @@
 ﻿using AWPrint.MenuItems;
-using AWPrint.Views;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +23,12 @@ namespace AWPrint
             // icon on the left side, and page that you want to open after selection
             var page1 = new MasterPageItem() { Title = "Ajustes Generales", Icon = "ic_printer.png", TargetType = typeof(SettingsGeneralPage) };
             var page2 = new MasterPageItem() { Title = "Configuración FTP", Icon = "ic_settings.png", TargetType = typeof(SettingsFTPPage) };
+            var page3 = new MasterPageItem() { Title = "Impresión", Icon = "ic_printer.png", TargetType = typeof(ImpresionPage) };
 
             // Adding menu items to menuList
             menuList.Add(page1);
             menuList.Add(page2);
+            menuList.Add(page3);
             // Setting our list to be ItemSource for ListView in MainPage.xaml
             navigationDrawerList.ItemsSource = menuList;
 

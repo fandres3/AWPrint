@@ -16,8 +16,8 @@
              This StackLayout you can use for other
              data that you want to have in your menu drawer
         -->
-            <StackLayout BackgroundColor="#e74c3c"
-                     HeightRequest="75">
+                <StackLayout BackgroundColor="#1e88e5"
+                     HeightRequest="100">
                 <Image Source="anisoftware_logo_peque.png"/>
                 <Label Text="Some Text title"
                  FontSize="20"

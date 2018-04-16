@@ -11,6 +11,11 @@ Utilizando Git en Visual Studio
 https://blogs.msdn.microsoft.com/esmsdn/2016/03/04/utilizando-git-en-visual-studio/
 
 
+Material Design
+https://material.io/guidelines/#
+
+Color Tool
+https://material.io/color/#!/?view.left=0&view.right=0
 
 
 
