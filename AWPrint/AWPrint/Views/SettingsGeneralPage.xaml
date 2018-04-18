@@ -5,7 +5,7 @@
              Title="Ajustes" Disappearing="GrabaSettings">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout >
+            <StackLayout  Margin="5,5,0,0">
                 <Label Text="Datos generales" FontSize="Medium"  TextColor="Blue" />
                 <Label Text="Ubicación del fichero" FontSize="Small" />
                 <Entry x:Name="txtCaminoAFichero" 

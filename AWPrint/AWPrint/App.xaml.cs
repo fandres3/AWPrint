@@ -11,21 +11,22 @@ namespace AWPrint
 {
     public partial class App : Application
     {
-        public static BluetoothManager mBTManager;
-        public static BluetoothAdapter mBluetoothAdapter;
-        public static BluetoothDevice mDevice;
-        public static BluetoothSocket mSocket;
+        public static BluetoothManager mBTManager = null;
+        public static BluetoothAdapter mBluetoothAdapter = null;
+        public static BluetoothDevice mDevice = null;
+        public static BluetoothSocket mSocket = null;
+ 
 
         public App()
         {
             InitializeComponent();
 
             IniciaSettings();
+            //  var ResultadoBT = FindBT();
+            //  if (ResultadoBT == "Bluetooth Ok") OpenBT();
 
-            var ResultadoBT = FindBT();
-            if (ResultadoBT == "Bluetooth Ok") OpenBT();
-
-            MainPage = new AWPrint.MainPage(ResultadoBT);
+            //MainPage = new AWPrint.MainPage(ResultadoBT);
+            MainPage = new AWPrint.MainPage("");
         }
 
         private void IniciaSettings()
@@ -57,9 +58,9 @@ namespace AWPrint
                 if (!AWPrint.App.mBluetoothAdapter.IsEnabled)
                     throw new Exception("Adaptador Bluetooth desconectado.");
 
-                var Impresora = Application.Current.Properties["Impresora"] as string;
+                String impresora = Application.Current.Properties["Impresora"] as string;
                 AWPrint.App.mDevice = (from bd in AWPrint.App.mBluetoothAdapter.BondedDevices
-                                       where bd.Name == Impresora
+                                       where bd.Name == impresora
                                        select bd).FirstOrDefault();
 
                 if (AWPrint.App.mDevice == null)

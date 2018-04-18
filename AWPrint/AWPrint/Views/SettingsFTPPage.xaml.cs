@@ -17,10 +17,10 @@ namespace AWPrint
     public partial class SettingsFTPPage : ContentPage
     {
 
-        private BluetoothSocket _socket;
+        static private BluetoothSocket _socket;
         // byte[] buffer;
-        System.IO.Stream mmOutputStream;
-        System.IO.Stream mmInputStream;
+        static System.IO.Stream mmOutputStream;
+        static System.IO.Stream mmInputStream;
 
         public SettingsFTPPage()
         {
@@ -59,7 +59,10 @@ namespace AWPrint
 
         void BtnPruebaFTPClicked(object sender, EventArgs args)
         {
-            var uri = new Uri("ftp://" + Application.Current.Properties["FTPServer"] + "/test.txt");
+
+            string fichero = Application.Current.Properties["Fichero"] as string;
+            //var uri = new Uri("ftp://" + Application.Current.Properties["FTPServer"] + "/test.txt");
+            var uri = new Uri("ftp://" + Application.Current.Properties["FTPServer"] + "/" + fichero);
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
@@ -103,8 +106,9 @@ namespace AWPrint
                 return;
             }
 
-            String fichero = Application.Current.Properties["Fichero"] as string;
+            //String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino,fichero);
+            File.Delete(fileName);
 
             FileStream fs;
             try
@@ -117,6 +121,7 @@ namespace AWPrint
                 lblStatus.Text = e.Message;
                 return;
             }
+
             int ReadCount = responseStream.Read(buffer, 0, buffer.Length);
             while (ReadCount > 0)
             {
@@ -127,6 +132,12 @@ namespace AWPrint
             fs.Close();
             reader.Close();
             response.Close();
+            if (!File.Exists (fileName))
+            {
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = "No descargado";
+                return;
+            }
 
             lblStatus.TextColor = Color.Green;
             lblStatus.Text = "Correcto";
@@ -137,22 +148,57 @@ namespace AWPrint
         void BtnPruebaImpresionClicked(object sender, EventArgs args)
         {
             BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
-            if (adapter == null)
-                throw new Exception("No Bluetooth adapter found.");
+            if (adapter == null) {
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = "No encontrado adaptador Bluetooth";
+                return;
+            }
+               
+            if (!adapter.IsEnabled) {
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = "Adaptador Bluetooth no conectado";
+                return;
+            }
 
-            if (!adapter.IsEnabled)
-                throw new Exception("Bluetooth adapter is not enabled.");
-
+            String impresora = Application.Current.Properties["Impresora"] as string;
             BluetoothDevice device = (from bd in adapter.BondedDevices
-                                      where bd.Name == "T9 BT Printer"
+                                      where bd.Name == impresora
                                       select bd).FirstOrDefault();
 
             if (device == null)
-                throw new Exception("Named device not found.");
+            {
+                lblStatus.TextColor = Color.Red;
+                lblStatus.Text = "Impresora " + impresora + " no encontrada";
+                return;
+            }
 
-            _socket = device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
-            _socket.Connect();
+            try
+            {
+                _socket = null;
+                _socket = device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
+                //_socket = device.CreateInsecureRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
+   
+                _socket.Connect();
+
+            }
+            catch (Exception e)
+            {
+                lblStatus.TextColor = Color.Red;
+                //lblStatus.Text = "Impresora " + impresora + " no emparejada";
+                lblStatus.Text = e.Message;
+                return;
+            }
+
+            String camino = Application.Current.Properties["CaminoAFichero"] as string;
+            String fichero = Application.Current.Properties["Fichero"] as string;
+            String fileName = Path.Combine(camino, fichero);
             String message = "Linea de prueba";
+            using (var streamReader = new StreamReader(fileName))
+            {
+                message = streamReader.ReadToEnd();
+                //System.Diagnostics.Debug.WriteLine(content);
+            }
+            
             Encoding u8 = Encoding.UTF8;
             byte[] buffer = u8.GetBytes(message);
             // Read data from the device
@@ -161,6 +207,7 @@ namespace AWPrint
             // https://brianpeek.com/connect-to-a-bluetooth-device-with-xamarinandroid/
             // https://forums.xamarin.com/discussion/6576/how-to-send-data-to-printer
             // https://stackoverflow.com/questions/33775823/send-data-to-bluetooth-printer
+            // https://www.androidcode.ninja/android-bluetooth-tutorial/
 
             buffer = u8.GetBytes(message);
 
@@ -169,6 +216,9 @@ namespace AWPrint
             mmOutputStream = _socket.OutputStream;
             mmInputStream = _socket.InputStream;
 
+            mmOutputStream.Close();
+            mmInputStream.Close();
+            _socket.Close();
         }
 
         protected override void OnDisappearing()
