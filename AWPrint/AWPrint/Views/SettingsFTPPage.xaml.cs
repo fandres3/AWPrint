@@ -74,7 +74,7 @@ namespace AWPrint
             }
             catch (Exception e)
             {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = e.Message;
                 return;
             }
@@ -88,7 +88,7 @@ namespace AWPrint
             catch (System.Net.WebException e)
             {
 
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = e.Message;
                 return;
             }
@@ -101,7 +101,7 @@ namespace AWPrint
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             if (!Directory.Exists(camino))
             {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = "No existe " + camino;
                 return;
             }
@@ -117,7 +117,7 @@ namespace AWPrint
             }
             catch (System.IO.IOException e)
             {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = e.Message;
                 return;
             }
@@ -134,12 +134,12 @@ namespace AWPrint
             response.Close();
             if (!File.Exists (fileName))
             {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = "No descargado";
                 return;
             }
 
-            lblStatus.TextColor = Color.Green;
+            lblStatus.BackgroundColor = Color.Green;
             lblStatus.Text = "Correcto";
             return;
         }
@@ -149,13 +149,13 @@ namespace AWPrint
         {
             BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
             if (adapter == null) {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = "No encontrado adaptador Bluetooth";
                 return;
             }
                
             if (!adapter.IsEnabled) {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = "Adaptador Bluetooth no conectado";
                 return;
             }
@@ -167,7 +167,7 @@ namespace AWPrint
 
             if (device == null)
             {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 lblStatus.Text = "Impresora " + impresora + " no encontrada";
                 return;
             }
@@ -183,7 +183,7 @@ namespace AWPrint
             }
             catch (Exception e)
             {
-                lblStatus.TextColor = Color.Red;
+                lblStatus.BackgroundColor = Color.Red;
                 //lblStatus.Text = "Impresora " + impresora + " no emparejada";
                 lblStatus.Text = e.Message;
                 return;

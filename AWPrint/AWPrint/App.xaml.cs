@@ -32,67 +32,20 @@ namespace AWPrint
         private void IniciaSettings()
         {
             if (!Application.Current.Properties.ContainsKey("CaminoAFichero"))
-            { Application.Current.Properties["CaminoAFichero"] = "/storage/"; }
-
-            if (!Application.Current.Properties.ContainsKey("Fichero"))
-            { Application.Current.Properties["Fichero"] = "fichero.txt"; }
-
-            if (!Application.Current.Properties.ContainsKey("Impresora"))
-            { Application.Current.Properties["Impresora"] = "PrinterBT"; }
+            {   
+                // Settings Generales
+                Application.Current.Properties["CaminoAFichero"] = "/storage/";
+                Application.Current.Properties["Fichero"] = "fichero.txt";
+                Application.Current.Properties["Impresora"] = "PrinterBT";
+                // Settings FTP
+                Application.Current.Properties["FTPServer"] = "ftp.servidor.com";
+                Application.Current.Properties["FTPUser"] = "usuario";
+                Application.Current.Properties["FTPPassword"] = "1234";
+                Application.Current.Properties["FTPCarpeta"] = "carpeta remota FTP";
+                Application.Current.Properties["FTPSSL"] = "0";
+            }
         }
 
-        private String FindBT()
-        {
-            try
-            {
-                AWPrint.App.mBluetoothAdapter = BluetoothAdapter.DefaultAdapter;
-                if (AWPrint.App.mBluetoothAdapter == null)
-                {
-                    throw new Exception("No encuentro adaptador Bluetooth.");
-                }
-
-                if (AWPrint.App.mBluetoothAdapter == null)
-                {
-                    throw new Exception("No encuentro adaptador Bluetooth.");
-                }
-                if (!AWPrint.App.mBluetoothAdapter.IsEnabled)
-                    throw new Exception("Adaptador Bluetooth desconectado.");
-
-                String impresora = Application.Current.Properties["Impresora"] as string;
-                AWPrint.App.mDevice = (from bd in AWPrint.App.mBluetoothAdapter.BondedDevices
-                                       where bd.Name == impresora
-                                       select bd).FirstOrDefault();
-
-                if (AWPrint.App.mDevice == null)
-                    throw new Exception("Nombre de periférico no encontrado.");
-
-                return "Bluetooth Ok";
-            }
-            catch (Exception e)
-            {
-                return "ERROR:" + e.Message;
-                //DisplayAlert( throw e.Message ;
-            }
-
-
-        }
-
-        private void OpenBT()
-        {
-            try
-            {
-                BluetoothSocket mSocket = AWPrint.App.mDevice.CreateRfcommSocketToServiceRecord(
-                               UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
-                mSocket.ConnectAsync();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-
-        }
         protected override void OnStart()
         {
             // Handle when your app starts

@@ -16,7 +16,7 @@
              This StackLayout you can use for other
              data that you want to have in your menu drawer
         -->
-                <StackLayout BackgroundColor="#1e33e5"
+                <StackLayout BackgroundColor="#90caf9"
                      HeightRequest="100">
                 <Image Source="anisoftware_logo_peque.png"/>
                 <Label Text="Some Text title"
@@ -29,7 +29,7 @@
             <ListView x:Name="navigationDrawerList"
                   RowHeight="60"
                   SeparatorVisibility="None"
-                  BackgroundColor="#e8e8e8"
+                  BackgroundColor="#e1f5fe"
                   ItemSelected="OnMenuItemSelected">
 
                 <ListView.ItemTemplate>

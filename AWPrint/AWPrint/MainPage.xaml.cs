@@ -11,13 +11,13 @@ namespace AWPrint
 {
     public partial class MainPage : MasterDetailPage
     {
-        public List<MasterPageItem> menuList { get; set; }
+        public List<MasterPageItem> MenuList { get; set; }
 
         public MainPage(String MensajeInicial)
         {
             InitializeComponent();
 
-            menuList = new List<MasterPageItem>();
+            MenuList = new List<MasterPageItem>();
             // Creating our pages for menu navigation
             // Here you can define title for item, 
             // icon on the left side, and page that you want to open after selection
@@ -26,11 +26,11 @@ namespace AWPrint
             var page3 = new MasterPageItem() { Title = "Impresión", Icon = "ic_printer.png", TargetType = typeof(ImpresionPage) };
 
             // Adding menu items to menuList
-            menuList.Add(page1);
-            menuList.Add(page2);
-            menuList.Add(page3);
+            MenuList.Add(page1);
+            MenuList.Add(page2);
+            MenuList.Add(page3);
             // Setting our list to be ItemSource for ListView in MainPage.xaml
-            navigationDrawerList.ItemsSource = menuList;
+            navigationDrawerList.ItemsSource = MenuList;
 
 
             Detail = new NavigationPage(new ImpresionPage());

@@ -2,12 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AWPrint.ImpresionPage"
-             Title="Imprimir">
+             Title="Albarán">
     <ContentPage.Content>
-        <StackLayout Margin="5,30,5,5">
-            <Button Text="Imprime"
-                    Clicked="BtnImprimirClicked"/>
-            <Label x:Name="lblStatus" Text=""
+
+        <StackLayout Margin="5,40,5,5" VerticalOptions="Start" HorizontalOptions="Center">
+                <Image Source="FRESCOFRIO_AZUL.png"/>
+                <Button Margin="5,30" Text="Imprimir albarán"
+                    Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
+                <Label x:Name="lblStatus" Text=""
                     FontSize="Medium"
                     VerticalOptions="EndAndExpand"
                     HorizontalOptions="Center"
@@ -16,3 +18,4 @@
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+    
