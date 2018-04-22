@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AWPrint.Services;
 
 using Xamarin.Forms;
 
@@ -15,7 +16,7 @@ namespace AWPrint
         public static BluetoothAdapter mBluetoothAdapter = null;
         public static BluetoothDevice mDevice = null;
         public static BluetoothSocket mSocket = null;
- 
+
 
         public App()
         {
@@ -24,7 +25,6 @@ namespace AWPrint
             IniciaSettings();
             //  var ResultadoBT = FindBT();
             //  if (ResultadoBT == "Bluetooth Ok") OpenBT();
-
             //MainPage = new AWPrint.MainPage(ResultadoBT);
             MainPage = new AWPrint.MainPage("");
         }
