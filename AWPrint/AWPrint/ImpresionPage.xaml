@@ -5,15 +5,15 @@
              Title="Albarán">
     <ContentPage.Content>
 
-        <StackLayout Margin="5,40,5,5" VerticalOptions="Start" HorizontalOptions="Center">
+        <StackLayout Margin="5,40,5,5" VerticalOptions="FillCenterAndExpand"  HorizontalOptions="Center">
                 <Image Source="FRESCOFRIO_AZUL.png"/>
                 <Button Margin="5,30" Text="Imprimir albarán"
                     Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
-            <StackLayout Margin="0,0,0,0">
+            <StackLayout Margin="0,0,0,0"  VerticalOptions="EndAndExpand"
+                    HorizontalOptions="FillAndExpand" >
                 <Label x:Name="lblStatus" Text=""
                     FontSize="Medium"
-                    VerticalOptions="EndAndExpand"
-                    HorizontalOptions="Fill" 
+                   
                     TextColor="White"/>
             </StackLayout>
                 

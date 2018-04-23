@@ -89,7 +89,13 @@ namespace AWPrint
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino, fichero);
-
+            if (!File.Exists (fileName))
+            {
+                c = Color.Red;
+                lblStatus.BackgroundColor = c;
+                lblStatus.Text = "No existe " + fileName;
+                return;
+            }
             String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
             if (BT.estado == false)
             {

@@ -31,6 +31,7 @@ namespace AWPrint.Services
             return true;
         }
 
+
         public Boolean FTPDescargaFichero(String carpetaOrigen, String ficheroOrigen, String carpetaDestino, String ficheroDestino)
         {
             estado = false;
@@ -109,5 +110,6 @@ namespace AWPrint.Services
             mensaje = "Correcto";
             return true;
         }
+
     }
 }

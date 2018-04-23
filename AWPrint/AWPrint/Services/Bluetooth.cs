@@ -32,7 +32,12 @@ namespace AWPrint.Services
         public BluetoothAdapter BluetoothAdaptador()
         {
             mAdapter = BluetoothAdapter.DefaultAdapter;
-            if (mAdapter == null) { mensaje = "No encontrado adaptador Bluetooth"; estado = false;  return null; }
+            if (mAdapter == null)
+            {
+                mensaje = "No encontrado adaptador Bluetooth";
+                estado = false;
+                return null;
+            }
 
             if (!mAdapter.IsEnabled)
             {
@@ -98,7 +103,11 @@ namespace AWPrint.Services
         {
             // Si no hay conexión previa vuelve a conectar
             if (mSocket == null) {
-                if (BluetoothConecta(nombreDispositivo) == null) { estado = false; return mensaje; }
+                if (BluetoothConecta(nombreDispositivo) != "")
+                {
+                    estado = false;
+                    return mensaje;
+                }
             }
             String fileName = Path.Combine(carpetaAFichero, fichero);
 
