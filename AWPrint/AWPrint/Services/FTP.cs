@@ -77,12 +77,26 @@ namespace AWPrint.Services
             }
 
             String fileName = Path.Combine(carpetaDestino, ficheroDestino);
-            File.Delete(fileName);
+
+            try
+            {
+                File.Delete(fileName);
+            }
+            catch (Exception)
+            {
+                //mensaje = "No existe " + fileName;
+                //return false;
+            }
 
             FileStream fs;
             try
             {
                 fs = new FileStream(fileName, FileMode.Create);
+            }
+            catch (System.UnauthorizedAccessException e)
+            {
+                mensaje = e.Message;
+                return false;
             }
             catch (System.IO.IOException e)
             {
