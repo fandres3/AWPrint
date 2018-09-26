@@ -21,10 +21,6 @@ namespace AWPrint
 	public partial class ImpresionPage : ContentPage
 	{
 
-        static private BluetoothSocket _socket;
-        // byte[] buffer;
-        static System.IO.Stream mmOutputStream;
-        static System.IO.Stream mmInputStream;
         public static FTP Ftp;
         public static Bluetooth BT;
         double width;

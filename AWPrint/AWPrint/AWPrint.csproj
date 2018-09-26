@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>Comercial Anisoftware S.L.</Copyright>
     <Company>Comercial Anisoftware S.L.</Company>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

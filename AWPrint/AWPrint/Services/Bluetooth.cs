@@ -116,7 +116,19 @@ namespace AWPrint.Services
             {
                 message = streamReader.ReadToEnd();
             }
+            // ---- Elimino lineas CR+LF del final del archivo (ya en la cadena message)
+            //message = message.TrimEnd( System.Environment.NewLine.ToCharArray());
+            message = message.TrimEnd('\r');
+            message = message.TrimEnd('\n');
+            //message = message.Replace("\r\n","");
+            int final = message.IndexOf("...");
 
+            if (final>-1)
+            {
+                message = message.Substring(0, final);
+            }
+
+            // ----
             Encoding u8 = Encoding.UTF8;
             byte[] buffer = u8.GetBytes(message);
             // Read data from the device
