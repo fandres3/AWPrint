@@ -1,5 +1,4 @@
 ﻿using Android.Bluetooth;
-using Android.OS;
 using Java.Util;
 using System;
 using System.Collections.Generic;
@@ -46,7 +45,6 @@ namespace AWPrint.Services
                 estado = false;
                 return null;
             }
-            estado = true;
             return mAdapter;
         }
 
@@ -61,7 +59,6 @@ namespace AWPrint.Services
                 estado = false;
                 return null;
             }
-            estado = true;
             return mDevice;
         }
 
@@ -70,42 +67,13 @@ namespace AWPrint.Services
             try
             {
                 mSocket = null;
-                //mSocket = mDevice.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
-                // 00001101-0000-1000-8000-00805f9b34fb Original
-                // 0000111f-0000-1000-8000-00805f9b34fb     
-                // 00001132-0000-1000-8000-00805f9b34fb
-                // 00000000-deca-fade-deca-deafdecacafe
+                mSocket = mDevice.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
+                //_socket = device.CreateInsecureRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
 
-                //mSocket = mDevice.CreateInsecureRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
-
-                ParcelUuid[] uuids = null;
-                if (mDevice.FetchUuidsWithSdp())
-                {
-                    
-                    uuids = mDevice.GetUuids();
-                }
-                if ((uuids != null) && (uuids.Length > 0))
-                {
-                    foreach (var uuid in uuids)
-                    {
-                        try
-                        {
-                            mSocket = mDevice.CreateRfcommSocketToServiceRecord(uuid.Uuid);
-                            // mSocket = mDevice.CreateInsecureRfcommSocketToServiceRecord(uuid.Uuid);
-                            mSocket.Connect();
-                            estado = true;
-                            mensaje = "Correcto";
-                            return mSocket;
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("ex: " + ex.Message);
-                            mensaje = ex.Message;
-                            estado = false;
-                            return null;
-                        }
-                    }
-                }
+                mSocket.Connect();
+                estado = true;
+                mensaje = "Correcto";
+                return mSocket;
 
             }
             catch (Exception e)
@@ -114,7 +82,6 @@ namespace AWPrint.Services
                 estado = false;
                 return null;
             }
-            return null;
         }
 
         public String BluetoothConecta(String nombreDispositivo)
@@ -126,9 +93,9 @@ namespace AWPrint.Services
             if (nombreDispositivo != null)
             {
                 if (BluetoothDispositivo(nombreDispositivo) == null) return mensaje;
-                if (BluetoothPaquete() == null) return mensaje;
-           }
+            }
            
+            if (BluetoothPaquete() == null) return mensaje;
             return "";
         }
 

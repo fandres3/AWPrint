@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AWPrint.SettingsGeneralPage"
+             Title="Ajustes" Disappearing="GrabaSettings">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout  Margin="5,5,0,0">
+                <Label Text="Datos generales" FontSize="Medium"  TextColor="Blue" />
+                <Label Text="Ubicación del fichero" FontSize="Small" />
+                <Entry x:Name="txtCaminoAFichero" 
+                   Text="Ubicación del fichero" 
+                   Placeholder="Indique ubicación"
+                   FontSize="Small"/>
+                <Label Text="Fichero" FontSize="Small"/>
+                <Entry x:Name="txtFichero" 
+                   Text="Nombre del fichero a imprimir" 
+                   Placeholder="Nombre"
+                   FontSize="Small"/>
+                <Label Text="Nombre impresora BT" FontSize="Small"/>
+                <Entry x:Name="txtImpresora" 
+                   Text="Nombre impresora Bluetooth" 
+                   Placeholder="Nombre impresora Bluetooth"
+                   FontSize="Small"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
