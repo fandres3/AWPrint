@@ -84,13 +84,14 @@ namespace AWPrint
         }
 
 
-        void BtnPruebaImpresionClicked(object sender, EventArgs args)
+       void BtnPruebaImpresionClickedAsync(object sender, EventArgs args)
         {
             lblStatus.Text = "";
             Color c = Color.Green;
             String impresora = Application.Current.Properties["Impresora"] as string;
             BT = new Bluetooth(impresora);
-            if (BT.BluetoothConecta(impresora) != "")
+            String zAux =  BT.BluetoothConecta(impresora);
+            if (zAux != "")
             {
                 c = Color.Red;
                 lblStatus.BackgroundColor = c;
@@ -102,7 +103,7 @@ namespace AWPrint
             String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino, fichero);
 
-            String Resultado = BT.BluetoothEnviarFichero(camino,fileName,impresora);
+            String Resultado =  BT.BluetoothEnviarFichero(camino,fileName,impresora);
             if (BT.estado == false)
             {
                 c = Color.Red;

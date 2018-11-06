@@ -7,6 +7,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using AWPrint;
+using Plugin.Connectivity;
+using Plugin.Connectivity.Abstractions;
 
 namespace AWPrint.Droid
 {
@@ -26,6 +28,7 @@ namespace AWPrint.Droid
 
 
         }
+
     }
 }
 

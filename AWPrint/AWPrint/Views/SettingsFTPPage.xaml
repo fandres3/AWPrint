@@ -33,7 +33,7 @@
                 </StackLayout>
             <StackLayout  Orientation="Horizontal">
                 <Button Text="Test FTP" Clicked="BtnPruebaFTPClicked" HorizontalOptions="CenterAndExpand" BackgroundColor="WhiteSmoke"></Button>
-                <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClicked" HorizontalOptions="CenterAndExpand" BackgroundColor="WhiteSmoke"></Button>
+                <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClickedAsync" HorizontalOptions="CenterAndExpand" BackgroundColor="WhiteSmoke"></Button>
             </StackLayout>
             <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand">
             <Label x:Name="lblStatus" Text=""

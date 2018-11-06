@@ -25,6 +25,7 @@ namespace AWPrint
         public static Bluetooth BT;
         double width;
         double height;
+        public static bool NetworkAvailable = true;
 
         public ImpresionPage()
 		{
@@ -51,16 +52,21 @@ namespace AWPrint
         void BtnImprimirClicked(object sender, System.EventArgs e)
         {
 
-            // PASO 1 -> Descarga por FTP
+            // PASO 0 -> Comprueba conectividad con internet
+
+            // PASO 1 -> Descarga por FTP ----------------------------------------------------------
             String sw = Application.Current.Properties["FTPSSL"] as string;
             Boolean swFTPSSL = (sw != "0");
             Ftp = new FTP(Application.Current.Properties["FTPServer"] as string,
-            Application.Current.Properties["FTPUser"] as string,
-            Application.Current.Properties["FTPPassword"] as string,
-            swFTPSSL,
-            Application.Current.Properties["FTPCarpeta"] as string);
+                    Application.Current.Properties["FTPUser"] as string,
+                    Application.Current.Properties["FTPPassword"] as string,
+                    swFTPSSL,
+                    Application.Current.Properties["FTPCarpeta"] as string);
 
-            Color c = Color.Green;
+            Color c = Color.Gray;
+            lblStatus.BackgroundColor = c;
+            lblStatus.Text = "Descargando fichero " + Application.Current.Properties["Fichero"];
+
             if (!Ftp.FTPDescargaFichero(Application.Current.Properties["FTPCarpeta"] as string,
                 Application.Current.Properties["Fichero"] as string,
                 Application.Current.Properties["CaminoAFichero"] as string,
@@ -72,10 +78,24 @@ namespace AWPrint
                 return;
             }
 
-            // PASO 2 -> Impresión por Bluetooth
+            String camino = Application.Current.Properties["CaminoAFichero"] as string;
+            String fichero = Application.Current.Properties["Fichero"] as string;
+            String fileName = Path.Combine(camino, fichero);
+            if (!File.Exists(fileName))
+            {
+                c = Color.Red;
+                lblStatus.BackgroundColor = c;
+                lblStatus.Text = "No existe " + fileName;
+                return;
+            }
+
+            // PASO 2 -> Conexión por Bluetooth ----------------------------------------------------
+            lblStatus.Text = "Conectando Bluetooth";
+
             String impresora = Application.Current.Properties["Impresora"] as string;
             BT = new Bluetooth(impresora);
-            if (BT.BluetoothConecta(impresora) == null)
+            BT.BluetoothConecta(impresora);
+            if (BT.mensaje !="")
             {
                 c = Color.Red;
                 lblStatus.BackgroundColor = c;
@@ -83,16 +103,8 @@ namespace AWPrint
                 return;
             }
 
-            String camino = Application.Current.Properties["CaminoAFichero"] as string;
-            String fichero = Application.Current.Properties["Fichero"] as string;
-            String fileName = Path.Combine(camino, fichero);
-            if (!File.Exists (fileName))
-            {
-                c = Color.Red;
-                lblStatus.BackgroundColor = c;
-                lblStatus.Text = "No existe " + fileName;
-                return;
-            }
+            // PASO 3 -> Impresión por Bluetooth ----------------------------------------------------
+            lblStatus.Text = "Enviando a Bluetooth";
             String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
             if (BT.estado == false)
             {

@@ -161,6 +161,7 @@ namespace AWPrint.Services
                 message = message.Substring(0, final);
             }
 
+            message = message + "\r\n";
             // ----
             Encoding u8 = Encoding.UTF8;
             byte[] buffer = u8.GetBytes(message);

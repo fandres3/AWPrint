@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace AWPrint
 {
     public partial class MainPage : MasterDetailPage
@@ -60,5 +61,6 @@ namespace AWPrint
             Detail = new NavigationPage(new SettingsPage0());
             IsPresented = false;
         }
+
     }
 }

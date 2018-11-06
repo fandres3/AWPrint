@@ -18,4 +18,10 @@ Color Tool
 https://material.io/color/#!/?view.left=0&view.right=0
 
 
+Comprueba conectividad con Internet / wifi
+https://jamesmontemagno.github.io/ConnectivityPlugin/
 
+https://brianpeek.com/connect-to-a-bluetooth-device-with-xamarinandroid/
+https://forums.xamarin.com/discussion/6576/how-to-send-data-to-printer
+https://stackoverflow.com/questions/33775823/send-data-to-bluetooth-printer
+https://www.androidcode.ninja/android-bluetooth-tutorial/

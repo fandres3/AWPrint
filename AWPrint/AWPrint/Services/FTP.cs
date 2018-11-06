@@ -98,7 +98,7 @@ namespace AWPrint.Services
                 mensaje = e.Message;
                 return false;
             }
-            catch (System.IO.IOException e)
+            catch (System.IO.IOException)
             {
                 mensaje = "Error creación " + ficheroDestino; ;
                 return false;
