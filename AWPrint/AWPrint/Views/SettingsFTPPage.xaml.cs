@@ -11,6 +11,8 @@ using System.IO;
 using Android.Bluetooth;
 using Java.Util;
 using AWPrint.Services;
+using System.Threading;
+
 
 namespace AWPrint
 {
@@ -20,7 +22,7 @@ namespace AWPrint
 
      
         public static FTP Ftp;
-        public static Bluetooth BT;
+        public static Bluetooth2 BT;
 
         public SettingsFTPPage()
         {
@@ -81,29 +83,27 @@ namespace AWPrint
             }
             lblStatus.BackgroundColor = c;
             lblStatus.Text = Ftp.mensaje;
+            Ftp = null;
         }
 
 
-       void BtnPruebaImpresionClickedAsync(object sender, EventArgs args)
+       async void BtnPruebaImpresionClickedAsync(object sender, EventArgs args)
         {
             lblStatus.Text = "";
             Color c = Color.Green;
             String impresora = Application.Current.Properties["Impresora"] as string;
-            BT = new Bluetooth(impresora);
-            String zAux =  BT.BluetoothConecta(impresora);
-            if (zAux != "")
-            {
-                c = Color.Red;
-                lblStatus.BackgroundColor = c;
-                lblStatus.Text = BT.mensaje;
-                return;
-            }
-
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             String fichero = Application.Current.Properties["Fichero"] as string;
-            String fileName = Path.Combine(camino, fichero);
+            BT = new Bluetooth2(impresora);
+            ////BT.ImprimeBluetooth(impresora, camino, fileName);
+            await BT.Imprime(impresora, camino, fichero);
+            //Console.WriteLine("paso 3");
 
-            String Resultado =  BT.BluetoothEnviarFichero(camino,fileName,impresora);
+
+            //BT3 = new Bluetooth3(impresora);
+            //await BT3.Imprime(impresora, camino, fileName);
+
+            Thread.Sleep(1000);
             if (BT.estado == false)
             {
                 c = Color.Red;
@@ -111,7 +111,15 @@ namespace AWPrint
                 lblStatus.Text = BT.mensaje;
                 return;
             }
-          
+            else
+            {
+                Console.WriteLine("paso 3");
+                BT.BluetoothEnviarFichero(camino, fichero, impresora);
+                Console.WriteLine("vuelta aaaaaa");
+                lblStatus.Text = "Albarán impreso";
+            }
+
+
         }
 
         protected override void OnDisappearing()
@@ -124,6 +132,20 @@ namespace AWPrint
         {
             base.OnAppearing();
             lblStatus.Text = "";
+        }
+
+        async void BtnPruebaInternetClickedAsync(object sender, EventArgs args)
+        {
+            NetworkCheck CheckNetworkAccess = new NetworkCheck();
+
+            if (CheckNetworkAccess.IsNetworkConnected())
+            {
+                lblStatus.Text = "Conexión correcta";
+            }
+            else
+            {
+                await DisplayAlert("AWPrint", "Revise conexión a internet", "OK");
+            }
         }
 
     }

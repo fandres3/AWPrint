@@ -25,3 +25,13 @@ https://brianpeek.com/connect-to-a-bluetooth-device-with-xamarinandroid/
 https://forums.xamarin.com/discussion/6576/how-to-send-data-to-printer
 https://stackoverflow.com/questions/33775823/send-data-to-bluetooth-printer
 https://www.androidcode.ninja/android-bluetooth-tutorial/
+
+
+7575
+T9 BT Printer 1234 en Huawei
+
+Check Internet Connectivity
+First, you need to add these two packages Xam.Plugin.Connectivity , plugin.wifiinfo in all platforms
+https://forums.xamarin.com/discussion/96509/internet-connection
+
+Xamarin.Essentials 

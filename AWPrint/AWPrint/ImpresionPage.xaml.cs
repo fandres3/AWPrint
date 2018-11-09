@@ -13,6 +13,7 @@ using Java.Util;
 using System.Net;
 using System.IO;
 using AWPrint.Services;
+using System.Threading;
 
 
 namespace AWPrint
@@ -22,10 +23,11 @@ namespace AWPrint
 	{
 
         public static FTP Ftp;
-        public static Bluetooth BT;
+        public static Bluetooth2 BT;
         double width;
         double height;
         public static bool NetworkAvailable = true;
+        public static Bluetooth3 BT3;
 
         public ImpresionPage()
 		{
@@ -49,11 +51,12 @@ namespace AWPrint
             lblStatus.Text = "";
         }
 
-        void BtnImprimirClicked(object sender, System.EventArgs e)
+        async void BtnImprimirClicked(object sender, System.EventArgs e)
         {
 
             // PASO 0 -> Comprueba conectividad con internet
-
+            
+            lblStatus.Text = "";
             // PASO 1 -> Descarga por FTP ----------------------------------------------------------
             String sw = Application.Current.Properties["FTPSSL"] as string;
             Boolean swFTPSSL = (sw != "0");
@@ -66,7 +69,7 @@ namespace AWPrint
             Color c = Color.Gray;
             lblStatus.BackgroundColor = c;
             lblStatus.Text = "Descargando fichero " + Application.Current.Properties["Fichero"];
-
+            Console.WriteLine("paso 1");
             if (!Ftp.FTPDescargaFichero(Application.Current.Properties["FTPCarpeta"] as string,
                 Application.Current.Properties["Fichero"] as string,
                 Application.Current.Properties["CaminoAFichero"] as string,
@@ -90,22 +93,19 @@ namespace AWPrint
             }
 
             // PASO 2 -> Conexión por Bluetooth ----------------------------------------------------
-            lblStatus.Text = "Conectando Bluetooth";
-
+            //lblStatus.Text = "Conectando Bluetooth";
+            Console.WriteLine("paso 2");
             String impresora = Application.Current.Properties["Impresora"] as string;
-            BT = new Bluetooth(impresora);
-            BT.BluetoothConecta(impresora);
-            if (BT.mensaje !="")
-            {
-                c = Color.Red;
-                lblStatus.BackgroundColor = c;
-                lblStatus.Text = BT.mensaje;
-                return;
-            }
+            BT = new Bluetooth2(impresora);
+            ////BT.ImprimeBluetooth(impresora, camino, fileName);
+            await BT.Imprime(impresora, camino, fileName);
+            //Console.WriteLine("paso 3");
 
-            // PASO 3 -> Impresión por Bluetooth ----------------------------------------------------
-            lblStatus.Text = "Enviando a Bluetooth";
-            String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
+
+            //BT3 = new Bluetooth3(impresora);
+            //await BT3.Imprime(impresora, camino, fileName);
+
+            Thread.Sleep(1000);
             if (BT.estado == false)
             {
                 c = Color.Red;
@@ -113,6 +113,37 @@ namespace AWPrint
                 lblStatus.Text = BT.mensaje;
                 return;
             }
+            else
+            {
+                Console.WriteLine("paso 3");
+                BT.BluetoothEnviarFichero(camino, fileName, impresora);
+                Console.WriteLine("vuelta aaaaaa");
+                lblStatus.Text = "Albarán impreso";
+            }
+           
+            //BT = new Bluetooth(impresora);
+            //BT.BluetoothConecta(impresora);
+            //if (BT.mensaje !="")
+            //{
+            //    c = Color.Red;
+            //    lblStatus.BackgroundColor = c;
+            //    lblStatus.Text = BT.mensaje;
+            //    return;
+            //}
+
+            //// PASO 3 -> Impresión por Bluetooth ----------------------------------------------------
+            //lblStatus.Text = "Enviando a Bluetooth";
+            //String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
+            //if (BT.estado == false)
+            //{
+            //    c = Color.Red;
+            //    lblStatus.BackgroundColor = c;
+            //    lblStatus.Text = BT.mensaje;
+            //    return;
+            //}
+
+
+
 
         }
 
@@ -133,5 +164,7 @@ namespace AWPrint
                 }
             }
         }
+
+     
     }
 }
