@@ -35,81 +35,81 @@ namespace AWPrint.Services
         }
 
 
-        private static void ResponseCallback(IAsyncResult ar)
-        {
-            FtpWebRequest ftpreq = null;
-            try
-            {
-                ftpreq = (FtpWebRequest)ar.AsyncState;
-                // did not bother to finish as the error happen on the next line!
-                FtpWebResponse ftpres = ftpreq.EndGetResponse(ar) as FtpWebResponse;
-               // Stream responseStream = ftpres.GetResponseStream();
-                //FileStream fileStream = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.txt"));
-                //byte[] BufferRead = null;
-                //responseStream.BeginRead(BufferRead, 0, 1284, new AsyncCallback(ReadCallback), state);
+        //private static void ResponseCallback(IAsyncResult ar)
+        //{
+        //    FtpWebRequest ftpreq = null;
+        //    try
+        //    {
+        //        ftpreq = (FtpWebRequest)ar.AsyncState;
+        //        // did not bother to finish as the error happen on the next line!
+        //        FtpWebResponse ftpres = ftpreq.EndGetResponse(ar) as FtpWebResponse;
+        //       // Stream responseStream = ftpres.GetResponseStream();
+        //        //FileStream fileStream = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.txt"));
+        //        //byte[] BufferRead = null;
+        //        //responseStream.BeginRead(BufferRead, 0, 1284, new AsyncCallback(ReadCallback), state);
 
-                Stream responseStream = ftpres.GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream);
-                int dataLength = (int)ftpreq.GetResponse().ContentLength;
+        //        Stream responseStream = ftpres.GetResponseStream();
+        //        StreamReader reader = new StreamReader(responseStream);
+        //        int dataLength = (int)ftpreq.GetResponse().ContentLength;
 
-                byte[] buffer = new byte[2048];
+        //        byte[] buffer = new byte[2048];
 
-                if (!Directory.Exists(cdes))
-                {
-                    //mensaje = "No existe " + carpetaDestino;
-                    //return false;
-                }
+        //        if (!Directory.Exists(cdes))
+        //        {
+        //            //mensaje = "No existe " + carpetaDestino;
+        //            //return false;
+        //        }
 
-                String fileName = Path.Combine(cdes, fdes);
+        //        String fileName = Path.Combine(cdes, fdes);
 
-                try
-                {
-                    File.Delete(fileName);
-                }
-                catch (Exception)
-                {
-                    //mensaje = "No existe " + fileName;
-                    //return false;
-                }
+        //        try
+        //        {
+        //            File.Delete(fileName);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            //mensaje = "No existe " + fileName;
+        //            //return false;
+        //        }
 
-                FileStream fs;
-                try
-                {
-                    fs = new FileStream(fileName, FileMode.Create);
-                }
-                catch (System.UnauthorizedAccessException e)
-                {
-                    //mensaje = e.Message;
-                    //return false;
-                }
-                catch (System.IO.IOException)
-                {
+        //        FileStream fs;
+        //        try
+        //        {
+        //            fs = new FileStream(fileName, FileMode.Create);
+        //        }
+        //        catch (System.UnauthorizedAccessException e)
+        //        {
+        //            //mensaje = e.Message;
+        //            //return false;
+        //        }
+        //        catch (System.IO.IOException)
+        //        {
 
-                }
+        //        }
 
-                int ReadCount = responseStream.Read(buffer, 0, buffer.Length);
-                while (ReadCount > 0)
-                {
-                    fs.Write(buffer, 0, ReadCount);
-                    ReadCount = responseStream.Read(buffer, 0, buffer.Length);
-                }
-                //      ResponseDescription = response.StatusDescription;
-                fs.Close();
-                reader.Close();
-                ftpres.Close();
-                if (!File.Exists(fileName))
-                {
+        //        int ReadCount = responseStream.Read(buffer, 0, buffer.Length);
+        //        while (ReadCount > 0)
+        //        {
+        //            fs.Write(buffer, 0, ReadCount);
+        //            ReadCount = responseStream.Read(buffer, 0, buffer.Length);
+        //        }
+        //        //      ResponseDescription = response.StatusDescription;
+        //        fs.Close();
+        //        reader.Close();
+        //        ftpres.Close();
+        //        if (!File.Exists(fileName))
+        //        {
 
-                }
+        //        }
 
 
 
-            }
-            catch (Exception e)
-            {
-                //handleError(e, state);
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        //handleError(e, state);
+        //    }
+        //}
 
 
 
@@ -120,17 +120,16 @@ namespace AWPrint.Services
             carpetaOrigen = carpetaOrigen == "" ? "/" : carpetaOrigen;
             carpetaOrigen = carpetaOrigen.EndsWith("/") ? carpetaOrigen : carpetaOrigen + "/";
             var uri = new Uri("ftp://" + mFTPServer + carpetaOrigen + ficheroOrigen );
-            cori = carpetaOrigen;
-            cdes = carpetaDestino;
-            fdes = ficheroDestino;
+            //cori = carpetaOrigen;
+            //cdes = carpetaDestino;
+            //fdes = ficheroDestino;
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.EnableSsl = mFTPSSL;
             request.Timeout = 60000;
             request.ReadWriteTimeout = 60000;
             request.KeepAlive = true;
-            request.UsePassive = true;
-
+            request.UsePassive = false;
                     
             try
             {
@@ -144,75 +143,75 @@ namespace AWPrint.Services
 
             FtpWebResponse response;
 
-            request.BeginGetResponse(new AsyncCallback(ResponseCallback), request);
+            //request.BeginGetResponse(new AsyncCallback(ResponseCallback), request);
 
 
-            //try
-            //{
-            //    response = (FtpWebResponse)request.GetResponse();
+            try
+            {
+                response = (FtpWebResponse)request.GetResponse();
 
-            //}
-            //catch (System.Net.WebException e)
-            //{
-            //    mensaje = e.Message;
-            //    return false;
-            //}
+            }
+            catch (System.Net.WebException e)
+            {
+                mensaje = e.Message;
+                return false;
+            }
 
-            //Stream responseStream = response.GetResponseStream();
-            //StreamReader reader = new StreamReader(responseStream);
-            //int dataLength = (int)request.GetResponse().ContentLength;
+            Stream responseStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(responseStream);
+            int dataLength = (int)request.GetResponse().ContentLength;
 
-            //byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[2048];
 
-            //if (!Directory.Exists(carpetaDestino))
-            //{
-            //    mensaje = "No existe " + carpetaDestino;
-            //    return false;
-            //}
+            if (!Directory.Exists(carpetaDestino))
+            {
+                mensaje = "No existe " + carpetaDestino;
+                return false;
+            }
 
-            //String fileName = Path.Combine(carpetaDestino, ficheroDestino);
+            String fileName = Path.Combine(carpetaDestino, ficheroDestino);
 
-            //try
-            //{
-            //    File.Delete(fileName);
-            //}
-            //catch (Exception)
-            //{
-            //    //mensaje = "No existe " + fileName;
-            //    //return false;
-            //}
+            try
+            {
+                File.Delete(fileName);
+            }
+            catch (Exception)
+            {
+                //mensaje = "No existe " + fileName;
+                //return false;
+            }
 
-            //FileStream fs;
-            //try
-            //{
-            //    fs = new FileStream(fileName, FileMode.Create);
-            //}
-            //catch (System.UnauthorizedAccessException e)
-            //{
-            //    mensaje = e.Message;
-            //    return false;
-            //}
-            //catch (System.IO.IOException)
-            //{
-            //    mensaje = "Error creación " + ficheroDestino; ;
-            //    return false;
-            //}
+            FileStream fs;
+            try
+            {
+                fs = new FileStream(fileName, FileMode.Create);
+            }
+            catch (System.UnauthorizedAccessException e)
+            {
+                mensaje = e.Message;
+                return false;
+            }
+            catch (System.IO.IOException)
+            {
+                mensaje = "Error creación " + ficheroDestino; ;
+                return false;
+            }
 
-            //int ReadCount = responseStream.Read(buffer, 0, buffer.Length);
-            //while (ReadCount > 0)
-            //{
-            //    fs.Write(buffer, 0, ReadCount);
-            //    ReadCount = responseStream.Read(buffer, 0, buffer.Length);
-            //}
-            ////      ResponseDescription = response.StatusDescription;
-            //fs.Close();
-            //reader.Close();
-            //response.Close();
-            //if (!File.Exists(fileName))
-            //{
-            //    mensaje = "No descargado";
-            //    return false;
-            //}
+            int ReadCount = responseStream.Read(buffer, 0, buffer.Length);
+            while (ReadCount > 0)
+            {
+                fs.Write(buffer, 0, ReadCount);
+                ReadCount = responseStream.Read(buffer, 0, buffer.Length);
+            }
+            //      ResponseDescription = response.StatusDescription;
+            fs.Close();
+            reader.Close();
+            response.Close();
+            if (!File.Exists(fileName))
+            {
+                mensaje = "No descargado";
+                return false;
+            }
 
             estado = true;
             mensaje = "Correcto";

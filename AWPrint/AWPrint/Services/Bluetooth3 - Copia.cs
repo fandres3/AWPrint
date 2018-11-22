@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace AWPrint.Services
 {
-    public class Bluetooth3
+    public class Bluetooth3_reserva
     {
 
         BluetoothSocket socket = null;
@@ -24,7 +23,7 @@ namespace AWPrint.Services
         public Boolean estado = false;
         public String mensaje = "";
 
-        public Bluetooth3(String nombreDispositivo)
+        public Bluetooth3_reserva(String nombreDispositivo)
         {
 
         }
@@ -71,32 +70,6 @@ namespace AWPrint.Services
                 }
 
 
-                String fileName = Path.Combine(carpetaAFichero, fichero);
-
-                String message = null;
-                using (var streamReader = new StreamReader(fileName))
-                {
-                    message = streamReader.ReadToEnd();
-                }
-                // ---- Elimino lineas CR+LF del final del archivo (ya en la cadena message)
-                //message = message.TrimEnd( System.Environment.NewLine.ToCharArray());
-                message = message.TrimEnd('\r');
-                message = message.TrimEnd('\n');
-                //message = message.Replace("\r\n","");
-
-                int final = message.IndexOf("...");
-
-                if (final > -1)
-                {
-                    message = message.Substring(0, final);
-                }
-
-                message = message + "\r\n";
-                // ----
-                Encoding u8 = Encoding.UTF8;
-                byte[] buffer = u8.GetBytes(message);
-                // Read data from the device
-
 
                 //BluetoothDevice hxm = BluetoothAdapter.DefaultAdapter.GetRemoteDevice (bt_printer);
                 UUID applicationUUID = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -106,7 +79,7 @@ namespace AWPrint.Services
                 socket.Connect();
                 inReader = new BufferedReader(new InputStreamReader(socket.InputStream));
                 outReader = new BufferedWriter(new OutputStreamWriter(socket.OutputStream));
-                outReader.Write(message);
+                outReader.Write("asdfasdfasd\r\n");
 
 
                 outReader.Flush();

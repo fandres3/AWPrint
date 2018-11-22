@@ -137,7 +137,7 @@ namespace AWPrint.Services
             //await z("");
         }
 
-        public void BluetoothEnviarFichero(String carpetaAFichero, String fichero, String nombreDispositivo)
+        private async Task BluetoothEnviarFichero(String carpetaAFichero, String fichero, String nombreDispositivo)
         {
             Console.WriteLine("dEEEEEEEEEENTRO 1");
             String fileName = Path.Combine(carpetaAFichero, fichero);
@@ -152,7 +152,16 @@ namespace AWPrint.Services
             message = message.TrimEnd('\r');
             message = message.TrimEnd('\n');
             //message = message.Replace("\r\n","");
+
+            int nAlbaran = message.IndexOf("NRO ALBARAN");
+            string strAlbaran = "";
+            if (nAlbaran > -1)
+            {
+                strAlbaran = message.Substring(nAlbaran + 14, 12); // Extrae el albarán para mostrarlo en pantalla antes de imprimir
+            }
+
             int final = message.IndexOf("...");
+
 
             if (final > -1)
             {
@@ -165,7 +174,7 @@ namespace AWPrint.Services
             byte[] buffer = u8.GetBytes(message);
             // Read data from the device
             Console.WriteLine("dEEEEEEEEEENTRO 2");
-            mSocket.InputStream.ReadAsync(buffer, 0, buffer.Length);
+            int x = await mSocket.InputStream.ReadAsync(buffer, 0, buffer.Length);
             Console.WriteLine("111111111111111111111111");
             // https://brianpeek.com/connect-to-a-bluetooth-device-with-xamarinandroid/
             // https://forums.xamarin.com/discussion/6576/how-to-send-data-to-printer
@@ -175,7 +184,7 @@ namespace AWPrint.Services
             buffer = u8.GetBytes(message);
 
             // Write data to the device
-            mSocket.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+            await mSocket.OutputStream.WriteAsync(buffer, 0, buffer.Length);
 
             Console.WriteLine("222222222222222222222222222222222");
             mmOutputStream = mSocket.OutputStream;
@@ -188,6 +197,7 @@ namespace AWPrint.Services
             mensaje = "Correcto";
             //return "";
             Console.WriteLine("paso 31");
+            await z("");
         }
     }
 

@@ -8,8 +8,11 @@
         <StackLayout x:Name="outerStack" Margin="5,40,5,5" VerticalOptions="CenterAndExpand" 
                      HorizontalOptions="Center">
                 <Image Source="FRESCOFRIO_AZUL.png"/>
-                <Button Margin="5,30" Text="Imprimir albarán"
+                <Button x:Name="btnDescargar" Margin="5,25" Text="Descargar"
+                    Clicked="BtnDescargarClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
+            <Button Margin="5,15" Text="Imprimir albarán"
                     Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
+
             <StackLayout Margin="0,0,0,0"  VerticalOptions="EndAndExpand"
                     HorizontalOptions="FillAndExpand" >
                 <Label x:Name="lblStatus" Text=""

@@ -166,7 +166,10 @@ namespace AWPrint.Services
             Encoding u8 = Encoding.UTF8;
             byte[] buffer = u8.GetBytes(message);
             // Read data from the device
+
+            Console.WriteLine("en blooetoothenviarfichero antes de inputstream.readasync");
             mSocket.InputStream.ReadAsync(buffer, 0, buffer.Length);
+            Console.WriteLine("en blooetoothenviarfichero después de inputstream.readasync");
 
             // https://brianpeek.com/connect-to-a-bluetooth-device-with-xamarinandroid/
             // https://forums.xamarin.com/discussion/6576/how-to-send-data-to-printer

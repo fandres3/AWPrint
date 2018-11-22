@@ -22,7 +22,7 @@ namespace AWPrint
 
      
         public static FTP Ftp;
-        public static Bluetooth2 BT;
+        public static Bluetooth BT;
 
         public SettingsFTPPage()
         {
@@ -94,9 +94,9 @@ namespace AWPrint
             String impresora = Application.Current.Properties["Impresora"] as string;
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             String fichero = Application.Current.Properties["Fichero"] as string;
-            BT = new Bluetooth2(impresora);
-            ////BT.ImprimeBluetooth(impresora, camino, fileName);
-            await BT.Imprime(impresora, camino, fichero);
+            BT = new Bluetooth(impresora);
+            BT.BluetoothEnviarFichero(impresora, camino, fichero);
+            //await BT.Imprime(impresora, camino, fichero);
             //Console.WriteLine("paso 3");
 
 
