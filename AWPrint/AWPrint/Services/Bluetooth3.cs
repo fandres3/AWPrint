@@ -21,7 +21,7 @@ namespace AWPrint.Services
         public static BluetoothSocket mSocket = null;
         public static BluetoothAdapter mAdapter = null;
         public static String mNombreDispositivo = null;
-        public Boolean estado = false;
+        public Boolean estado = true;
         public String mensaje = "";
 
         public Bluetooth3(String nombreDispositivo)
@@ -43,12 +43,10 @@ namespace AWPrint.Services
         public async Task ImprimeBluetooth(String nombreDispositivo, String carpetaAFichero, String fichero)
         {
             mAdapter = BluetoothAdapter.DefaultAdapter;
+            if (mAdapter == null) { estado = false; return; }
 
             if (mAdapter != null)
             {
-                estado = false;
-                await z("No encontrado adaptador Bluetooth");
-
 
                 if (!mAdapter.IsEnabled)
                 {
@@ -59,6 +57,7 @@ namespace AWPrint.Services
                 {
                     estado = false;
                     await z("Adaptador Bluetooth no conectado");
+                    return;
                 }
 
                 mDevice = (from bd in mAdapter.BondedDevices
@@ -68,6 +67,7 @@ namespace AWPrint.Services
                 {
                     estado = false;
                     await z("Dispositivo " + nombreDispositivo + " no encontrado");
+                    return;
                 }
 
 
@@ -78,6 +78,7 @@ namespace AWPrint.Services
                 {
                     message = streamReader.ReadToEnd();
                 }
+
                 // ---- Elimino lineas CR+LF del final del archivo (ya en la cadena message)
                 //message = message.TrimEnd( System.Environment.NewLine.ToCharArray());
                 message = message.TrimEnd('\r');
@@ -117,7 +118,7 @@ namespace AWPrint.Services
                 inReader.Close();
                 socket.Close();
                 outReader.Close();
-
+                estado = true;
             }
         }
     }

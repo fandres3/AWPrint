@@ -43,14 +43,14 @@ namespace AWPrint
     
             base.OnAppearing();
             lblStatus.Text = "";
-            btnDescargar.Text = "Descargar albarán";
+            btnDescargar.Text = "Albarán a imprimir";
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
             lblStatus.Text = "";
-            btnDescargar.Text = "Descargar albarán";
+            btnDescargar.Text = "Albarán a imprimir";
         }
 
         async void BtnDescargarClicked(object sender, System.EventArgs e)
@@ -61,16 +61,19 @@ namespace AWPrint
             String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino, fichero);
 
-          //  WebClient webClient = new WebClient();
-          //  webClient.DownloadFile("http://www.aniwin.com/portal/media/Agenda.pdf", fileName);
-            
+            //  WebClient webClient = new WebClient();
+            //  webClient.DownloadFile("http://www.aniwin.com/portal/media/Agenda.pdf", fileName);
+
+
 
             Color c = Color.Gray;
+           
             if (!File.Exists(fileName))
             {
                 c = Color.Red;
                 lblStatus.BackgroundColor = c;
-                lblStatus.Text = "No existe " + fileName;
+                //lblStatus.Text = "No existe " + fileName;
+                lblStatus.Text = "No hay albarán a imprimir";
                 return;
             }
                      
@@ -116,8 +119,8 @@ namespace AWPrint
                 strtAlbaran = message.Substring(tAlbaran + 14, 16); // Extrae el total albarán para mostrarlo en pantalla antes de imprimir
                 //strtAlbaran = strtAlbaran.Replace(",", ".");
             }
-            btnDescargar.Text = tipoDoc + "\n" + strcAlbaran + "\n" +strAlbaran + "\n" + string.Format("Total: {0,8:#,###.00}", Convert.ToDecimal(strtAlbaran)); 
-
+            btnDescargar.Text = tipoDoc + "\n" + strcAlbaran + "\n" +strAlbaran + "\n" + string.Format("Total: {0,8:#,###.00}", Convert.ToDecimal(strtAlbaran));
+            lblStatus.Text = "";
             await z("");
 
         }
@@ -164,7 +167,8 @@ namespace AWPrint
             {
                 c = Color.Red;
                 lblStatus.BackgroundColor = c;
-                lblStatus.Text = "No existe " + fileName;
+                // lblStatus.Text = "No existe " + fileName;
+                lblStatus.Text = "No hay albarán a imprimir";
                 return;
             }
 
@@ -195,9 +199,29 @@ namespace AWPrint
                 Console.WriteLine("paso 3");
       //           BT.BluetoothEnviarFichero(camino, fileName, impresora);
                 Console.WriteLine("vuelta aaaaaa");
+                c = Color.Green;
+                lblStatus.BackgroundColor = c;
                 lblStatus.Text = "Albarán impreso";
                 btnDescargar.Text = "Descargar albarán";
+
+                if (File.Exists(fileName))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(fileName); // 14-02-19 Borra el fichero del albarán ya impreso
+                    }
+                    catch (Exception ex)
+                    {
+                        lblStatus.Text = ex.Message;
+                        return;
+                    }
+                }
+
+
             }
+
+          
+
 
             //BT = new Bluetooth(impresora);
             //BT.BluetoothConecta(impresora);

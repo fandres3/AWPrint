@@ -8,7 +8,7 @@
         <StackLayout x:Name="outerStack" Margin="5,40,5,5" VerticalOptions="CenterAndExpand" 
                      HorizontalOptions="Center">
                 <Image Source="FRESCOFRIO_AZUL.png"/>
-                <Button x:Name="btnDescargar" Margin="5,25" Text="Descargar"
+                <Button x:Name="btnDescargar" Margin="5,25" Text="Albarán a imprimir"
                     Clicked="BtnDescargarClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
             <Button Margin="5,15" Text="Imprimir"
                     Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
