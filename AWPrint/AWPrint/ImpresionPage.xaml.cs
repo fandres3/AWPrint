@@ -52,6 +52,23 @@ namespace AWPrint
             lblStatus.Text = "";
             btnDescargar.Text = "Albarán a imprimir";
         }
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            if (width != this.width || height != this.height)
+            {
+                this.width = width;
+                this.height = height;
+                if (width > height)
+                {
+                    outerStack.Orientation = StackOrientation.Horizontal;
+                }
+                else
+                {
+                    outerStack.Orientation = StackOrientation.Vertical;
+                }
+            }
+        }
 
         async void BtnDescargarClicked(object sender, System.EventArgs e)
         {
@@ -220,53 +237,59 @@ namespace AWPrint
 
             }
 
-          
+        
+
+                //BT = new Bluetooth(impresora);
+                //BT.BluetoothConecta(impresora);
+                //if (BT.mensaje != "")
+                //{
+                //    c = Color.Red;
+                //    lblStatus.BackgroundColor = c;
+                //    lblStatus.Text = BT.mensaje;
+                //    return;
+                //}
+
+                //// PASO 3 -> Impresión por Bluetooth ----------------------------------------------------
+                //lblStatus.Text = "Enviando a Bluetooth";
+                //String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
+                //if (BT.estado == false)
+                //{
+                //    c = Color.Red;
+                //    lblStatus.BackgroundColor = c;
+                //    lblStatus.Text = BT.mensaje;
+                //    return;
+                //}
 
 
-            //BT = new Bluetooth(impresora);
-            //BT.BluetoothConecta(impresora);
-            //if (BT.mensaje != "")
-            //{
-            //    c = Color.Red;
-            //    lblStatus.BackgroundColor = c;
-            //    lblStatus.Text = BT.mensaje;
-            //    return;
-            //}
-
-            //// PASO 3 -> Impresión por Bluetooth ----------------------------------------------------
-            //lblStatus.Text = "Enviando a Bluetooth";
-            //String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
-            //if (BT.estado == false)
-            //{
-            //    c = Color.Red;
-            //    lblStatus.BackgroundColor = c;
-            //    lblStatus.Text = BT.mensaje;
-            //    return;
-            //}
 
 
-
-
-        }
-
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-            if (width != this.width || height != this.height)
-            {
-                this.width = width;
-                this.height = height;
-                if (width > height)
-                {
-                    outerStack.Orientation = StackOrientation.Horizontal;
-                }
-                else
-                {
-                    outerStack.Orientation = StackOrientation.Vertical;
-                }
             }
+
+
+        async void BtnDescargarFTPClicked(object sender, System.EventArgs e)
+        {
         }
 
-     
+
+
+        //protected override void OnSizeAllocated(double width, double height)
+        //{
+        //    base.OnSizeAllocated(width, height);
+        //    if (width != this.width || height != this.height)
+        //    {
+        //        this.width = width;
+        //        this.height = height;
+        //        if (width > height)
+        //        {
+        //            outerStack.Orientation = StackOrientation.Horizontal;
+        //        }
+        //        else
+        //        {
+        //            outerStack.Orientation = StackOrientation.Vertical;
+        //        }
+        //    }
+        //}
+
+
     }
 }

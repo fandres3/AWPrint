@@ -5,23 +5,38 @@
              Title="Albarán">
     <ContentPage.Content>
 
-        <StackLayout x:Name="outerStack" Margin="5,40,5,5" VerticalOptions="CenterAndExpand" 
+        <StackLayout x:Name="outerStack" Margin="5,40,5,5" VerticalOptions="CenterAndExpand"  Orientation="Vertical"
                      HorizontalOptions="Center">
-                <Image Source="FRESCOFRIO_AZUL.png"/>
-                <Button x:Name="btnDescargar" Margin="5,25" Text="Albarán a imprimir"
-                    Clicked="BtnDescargarClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
-            <Button Margin="5,15" Text="Imprimir"
-                    Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout>
+                        <Image Source="FRESCOFRIO_AZUL.png"/>
+                    </StackLayout>
+                    <StackLayout  Orientation="Horizontal">
 
-            <StackLayout Margin="0,0,0,0"  VerticalOptions="EndAndExpand"
+                        <Button x:Name="btnDescargar"  Text="Albarán a imprimir"
+                    Clicked="BtnDescargarClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
+                    </StackLayout>
+
+                    <StackLayout  Orientation="Horizontal">
+                        <Button x:Name="btnDescargarFTP"  Text="Albarán a imprimir"
+                    Clicked="BtnDescargarFTPClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
+                    </StackLayout>
+
+                    <StackLayout  Orientation="Horizontal">
+                        <Button  Text="Imprimir"
+                    Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
+                    </StackLayout>
+
+                    <StackLayout Margin="0,0,0,0"  VerticalOptions="EndAndExpand" Orientation="Vertical"
                     HorizontalOptions="FillAndExpand" >
-                <Label x:Name="lblStatus" Text=""
+                        <Label x:Name="lblStatus" Text=""
                     FontSize="Medium"
                    
                     TextColor="White"/>
-            </StackLayout>
-                
-            
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
