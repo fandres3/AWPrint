@@ -12,6 +12,8 @@ namespace AWPrint
 {
     public partial class MainPage : MasterDetailPage
     {
+        private double width;
+        private double height;
         public List<MasterPageItem> MenuList { get; set; }
 
         public MainPage(String MensajeInicial)
@@ -61,6 +63,7 @@ namespace AWPrint
             Detail = new NavigationPage(new SettingsPage0());
             IsPresented = false;
         }
+
 
     }
 }

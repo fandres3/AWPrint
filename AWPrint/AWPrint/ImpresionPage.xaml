@@ -5,25 +5,24 @@
              Title="Albarán">
     <ContentPage.Content>
 
-        <StackLayout x:Name="outerStack" Margin="5,40,5,5" VerticalOptions="CenterAndExpand"  Orientation="Vertical"
-                     HorizontalOptions="Center">
+        <StackLayout x:Name="outerStack" Margin="5,40,5,5"   Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                     > 
+            <Image Source="FRESCOFRIO_AZUL.png"/>
             <ScrollView>
-                <StackLayout>
-                    <StackLayout>
-                        <Image Source="FRESCOFRIO_AZUL.png"/>
-                    </StackLayout>
-                    <StackLayout  Orientation="Horizontal">
+                <StackLayout Margin="20,20"  HorizontalOptions="FillAndExpand">
+  
+                    <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
 
                         <Button x:Name="btnDescargar"  Text="Albarán a imprimir"
                     Clicked="BtnDescargarClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
                     </StackLayout>
 
-                    <StackLayout  Orientation="Horizontal">
+                    <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                         <Button x:Name="btnDescargarFTP"  Text="Albarán a imprimir"
                     Clicked="BtnDescargarFTPClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
                     </StackLayout>
 
-                    <StackLayout  Orientation="Horizontal">
+                    <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                         <Button  Text="Imprimir"
                     Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
                     </StackLayout>

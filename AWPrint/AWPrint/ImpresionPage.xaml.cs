@@ -24,8 +24,8 @@ namespace AWPrint
 
         public static FTP Ftp;
         public static Bluetooth3 BT;
-        double width;
-        double height;
+        private double width;
+        private double height;
         public static bool NetworkAvailable = true;
         public static Bluetooth3 BT3;
 
