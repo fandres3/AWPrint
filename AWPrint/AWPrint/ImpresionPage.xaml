@@ -10,32 +10,28 @@
             <Image Source="FRESCOFRIO_AZUL.png"/>
             <ScrollView>
                 <StackLayout Margin="20,20"  HorizontalOptions="FillAndExpand">
-  
                     <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-
                         <Button x:Name="btnDescargar"  Text="Albarán a imprimir"
                     Clicked="BtnDescargarClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
                     </StackLayout>
-
-                    <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                        <Button x:Name="btnDescargarFTP"  Text="Albarán a imprimir"
-                    Clicked="BtnDescargarFTPClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
-                    </StackLayout>
+                 
 
                     <StackLayout  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                         <Button  Text="Imprimir"
                     Clicked="BtnImprimirClicked" BackgroundColor="WhiteSmoke" Image="ic_launcher.png"/>
                     </StackLayout>
 
-                    <StackLayout Margin="0,0,0,0"  VerticalOptions="EndAndExpand" Orientation="Vertical"
+                 
+                </StackLayout>
+           
+            </ScrollView>
+            <StackLayout Margin="0,0,0,0"  VerticalOptions="EndAndExpand" Orientation="Vertical"
                     HorizontalOptions="FillAndExpand" >
-                        <Label x:Name="lblStatus" Text=""
+                <Label x:Name="lblStatus" Text=""  HorizontalOptions="FillAndExpand"
                     FontSize="Medium"
                    
                     TextColor="White"/>
-                    </StackLayout>
-                </StackLayout>
-            </ScrollView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

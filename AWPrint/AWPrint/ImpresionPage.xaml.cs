@@ -14,13 +14,14 @@ using System.Net;
 using System.IO;
 using AWPrint.Services;
 using System.Threading;
+using Xamarin.Essentials;
 
 
 namespace AWPrint
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ImpresionPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ImpresionPage : ContentPage
+    {
 
         public static FTP Ftp;
         public static Bluetooth3 BT;
@@ -30,17 +31,17 @@ namespace AWPrint
         public static Bluetooth3 BT3;
 
         public ImpresionPage()
-		{
-			InitializeComponent ();
-         //   lblStatus.Text = MensajeInicial;
-         //   if (MensajeInicial.StartsWith("ERROR:")) lblStatus.TextColor = Color.Red;
-         //       else lblStatus.TextColor = Color.Green;
+        {
+            InitializeComponent();
+            //   lblStatus.Text = MensajeInicial;
+            //   if (MensajeInicial.StartsWith("ERROR:")) lblStatus.TextColor = Color.Red;
+            //       else lblStatus.TextColor = Color.Green;
 
         }
 
         protected override void OnAppearing()
         {
-    
+
             base.OnAppearing();
             lblStatus.Text = "";
             btnDescargar.Text = "Albarán a imprimir";
@@ -73,7 +74,67 @@ namespace AWPrint
         async void BtnDescargarClicked(object sender, System.EventArgs e)
         {
 
+            // Modo = 0 -> El fichero a imprimir ya se encuentra en la carpeta tsclient indicada en la sesión o través de parámetro FOLDER_FTP en el servidor
+            // Modo = 1 -> El fichero baja por FTP
+            int modo = 1;
 
+            Color c = Color.Gray;
+            lblStatus.BackgroundColor = c;
+
+            if (modo == 1)
+            {
+                // PASO 0->Comprueba conectividad con internet 
+                var current = Connectivity.NetworkAccess;
+
+                if (current != NetworkAccess.Internet)
+                {
+                    // Connection to internet NOT is available
+                    c = Color.Red;
+                    lblStatus.BackgroundColor = c;
+                    lblStatus.Text = "SIN CONEXIÓN. NO HAY COBERTURA";
+                    await Task.Delay(2000);
+                    c = Color.White;
+                    lblStatus.Text = "";
+                    lblStatus.BackgroundColor = c;
+                    //////////////////////
+                    return;
+                    /////////////////////
+                }
+                else {
+                    lblStatus.Text = "CONECTADO. DESCARGANDO ....";
+                }
+            }
+
+
+                lblStatus.Text = "";
+                // PASO 1 -> Descarga por FTP ----------------------------------------------------------
+                String sw = Application.Current.Properties["FTPSSL"] as string;
+                Boolean swFTPSSL = (sw != "0");
+                Ftp = new FTP(Application.Current.Properties["FTPServer"] as string,
+                        Application.Current.Properties["FTPUser"] as string,
+                        Application.Current.Properties["FTPPassword"] as string,
+                        swFTPSSL,
+                        Application.Current.Properties["FTPCarpeta"] as string);
+
+
+                lblStatus.Text = "Descargando " + Application.Current.Properties["Fichero"];
+                lblStatus.BackgroundColor = Color.Gray;
+                Console.WriteLine("paso 1");
+                if (!Ftp.FTPDescargaFichero(Application.Current.Properties["FTPCarpeta"] as string,
+                    Application.Current.Properties["Fichero"] as string,
+                    Application.Current.Properties["CaminoAFichero"] as string,
+                    Application.Current.Properties["Fichero"] as string))
+                {
+                    c = Color.Red;
+                    lblStatus.BackgroundColor = c;
+                    lblStatus.Text = Ftp.mensaje;
+                    return;
+                }
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            lblStatus.Text = "Descargado";
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino, fichero);
@@ -81,10 +142,8 @@ namespace AWPrint
             //  WebClient webClient = new WebClient();
             //  webClient.DownloadFile("http://www.aniwin.com/portal/media/Agenda.pdf", fileName);
 
+       
 
-
-            Color c = Color.Gray;
-           
             if (!File.Exists(fileName))
             {
                 c = Color.Red;
@@ -93,7 +152,7 @@ namespace AWPrint
                 lblStatus.Text = "No hay albarán a imprimir";
                 return;
             }
-                     
+
 
             String message = null;
             using (var streamReader = new StreamReader(fileName))
@@ -125,8 +184,8 @@ namespace AWPrint
             else
             {
                 tipoDoc = "?";
-            } 
-            
+            }
+
 
             int tAlbaran = message.IndexOf("TOTAL ALBARAN");
             if (tAlbaran == -1) tAlbaran = message.IndexOf("TOTAL FACTURA");
@@ -136,7 +195,7 @@ namespace AWPrint
                 strtAlbaran = message.Substring(tAlbaran + 14, 16); // Extrae el total albarán para mostrarlo en pantalla antes de imprimir
                 //strtAlbaran = strtAlbaran.Replace(",", ".");
             }
-            btnDescargar.Text = tipoDoc + "\n" + strcAlbaran + "\n" +strAlbaran + "\n" + string.Format("Total: {0,8:#,###.00}", Convert.ToDecimal(strtAlbaran));
+            btnDescargar.Text = tipoDoc + "\n" + strcAlbaran + "\n" + strAlbaran + "\n" + string.Format("Total: {0,8:#,###.00}", Convert.ToDecimal(strtAlbaran));
             lblStatus.Text = "";
             await z("");
 
@@ -150,32 +209,7 @@ namespace AWPrint
         async void BtnImprimirClicked(object sender, System.EventArgs e)
         {
 
-            // PASO 0 -> Comprueba conectividad con internet
-            
-            //lblStatus.Text = "";
-            //// PASO 1 -> Descarga por FTP ----------------------------------------------------------
-            //String sw = Application.Current.Properties["FTPSSL"] as string;
-            //Boolean swFTPSSL = (sw != "0");
-            //Ftp = new FTP(Application.Current.Properties["FTPServer"] as string,
-            //        Application.Current.Properties["FTPUser"] as string,
-            //        Application.Current.Properties["FTPPassword"] as string,
-            //        swFTPSSL,
-            //        Application.Current.Properties["FTPCarpeta"] as string);
-
             Color c = Color.Gray;
-            //lblStatus.BackgroundColor = c;
-            //lblStatus.Text = "Descargando fichero " + Application.Current.Properties["Fichero"];
-            //Console.WriteLine("paso 1");
-            //if (!Ftp.FTPDescargaFichero(Application.Current.Properties["FTPCarpeta"] as string,
-            //    Application.Current.Properties["Fichero"] as string,
-            //    Application.Current.Properties["CaminoAFichero"] as string,
-            //    Application.Current.Properties["Fichero"] as string))
-            //{
-            //    c = Color.Red;
-            //    lblStatus.BackgroundColor = c;
-            //    lblStatus.Text = Ftp.mensaje;
-            //    return;
-            //}
 
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             String fichero = Application.Current.Properties["Fichero"] as string;
@@ -194,7 +228,7 @@ namespace AWPrint
             Console.WriteLine("paso 22");
             String impresora = Application.Current.Properties["Impresora"] as string;
             BT = new Bluetooth3(impresora);
-           // BT.BluetoothEnviarFichero(impresora, camino, fileName);
+            // BT.BluetoothEnviarFichero(impresora, camino, fileName);
             Console.WriteLine("vuelve de bluetoothenviarfichero");
             await BT.Imprime(impresora, camino, fileName);
             //Console.WriteLine("paso 3");
@@ -214,7 +248,7 @@ namespace AWPrint
             else
             {
                 Console.WriteLine("paso 3");
-      //           BT.BluetoothEnviarFichero(camino, fileName, impresora);
+                //           BT.BluetoothEnviarFichero(camino, fileName, impresora);
                 Console.WriteLine("vuelta aaaaaa");
                 c = Color.Green;
                 lblStatus.BackgroundColor = c;
@@ -237,39 +271,33 @@ namespace AWPrint
 
             }
 
-        
-
-                //BT = new Bluetooth(impresora);
-                //BT.BluetoothConecta(impresora);
-                //if (BT.mensaje != "")
-                //{
-                //    c = Color.Red;
-                //    lblStatus.BackgroundColor = c;
-                //    lblStatus.Text = BT.mensaje;
-                //    return;
-                //}
-
-                //// PASO 3 -> Impresión por Bluetooth ----------------------------------------------------
-                //lblStatus.Text = "Enviando a Bluetooth";
-                //String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
-                //if (BT.estado == false)
-                //{
-                //    c = Color.Red;
-                //    lblStatus.BackgroundColor = c;
-                //    lblStatus.Text = BT.mensaje;
-                //    return;
-                //}
 
 
+            //BT = new Bluetooth(impresora);
+            //BT.BluetoothConecta(impresora);
+            //if (BT.mensaje != "")
+            //{
+            //    c = Color.Red;
+            //    lblStatus.BackgroundColor = c;
+            //    lblStatus.Text = BT.mensaje;
+            //    return;
+            //}
+
+            //// PASO 3 -> Impresión por Bluetooth ----------------------------------------------------
+            //lblStatus.Text = "Enviando a Bluetooth";
+            //String Resultado = BT.BluetoothEnviarFichero(camino, fileName, impresora);
+            //if (BT.estado == false)
+            //{
+            //    c = Color.Red;
+            //    lblStatus.BackgroundColor = c;
+            //    lblStatus.Text = BT.mensaje;
+            //    return;
+            //}
 
 
-            }
 
 
-        async void BtnDescargarFTPClicked(object sender, System.EventArgs e)
-        {
         }
-
 
 
         //protected override void OnSizeAllocated(double width, double height)

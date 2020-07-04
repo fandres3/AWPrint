@@ -126,8 +126,8 @@ namespace AWPrint.Services
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.EnableSsl = mFTPSSL;
-            request.Timeout = 60000;
-            request.ReadWriteTimeout = 60000;
+            request.Timeout = 30000;
+            request.ReadWriteTimeout = 30000;
             request.KeepAlive = true;
             request.UsePassive = false;
                     
