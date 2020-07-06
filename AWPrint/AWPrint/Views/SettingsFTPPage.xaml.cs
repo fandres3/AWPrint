@@ -47,6 +47,11 @@ namespace AWPrint
                 String sw = Application.Current.Properties["FTPSSL"] as string;
                 swFTPSSL.IsToggled = (sw != "0");
             }
+            if (Application.Current.Properties.ContainsKey("FTPPasivo"))
+            {
+                String sw = Application.Current.Properties["FTPPasivo"] as string;
+                swFTPPasivo.IsToggled = (sw != "0");
+            }
         }
 
         void GrabaSettings(object sender, EventArgs args)
@@ -56,19 +61,25 @@ namespace AWPrint
             Application.Current.Properties["FTPPassword"] = txtFTPPassword.Text;
             Application.Current.Properties["FTPCarpeta"] = txtFTPCarpeta.Text;
             Application.Current.Properties["FTPSSL"] = (swFTPSSL.IsToggled == true) ? "1" : "0";
+            Application.Current.Properties["FTPPasivo"] = (swFTPPasivo.IsToggled == true) ? "1" : "0";
             App.Current.SavePropertiesAsync();
         }
 
         void BtnPruebaFTPClicked(object sender, EventArgs args)
         {
-            lblStatus.Text = "";
+            lblStatus.Text = "Descargando " + Application.Current.Properties["Fichero"];
+            lblStatus.BackgroundColor = Color.Gray;
             String sw = Application.Current.Properties["FTPSSL"] as string;
             Boolean swFTPSSL = (sw != "0");
+            String sw1 = Application.Current.Properties["FTPPasivo"] as string;
+            Boolean swFTPPasivo = (sw1 != "0");
+
             Ftp = new FTP(Application.Current.Properties["FTPServer"] as string,
                 Application.Current.Properties["FTPUser"] as string,
                 Application.Current.Properties["FTPPassword"] as string,
                 swFTPSSL,
-                Application.Current.Properties["FTPCarpeta"] as string);
+                Application.Current.Properties["FTPCarpeta"] as string,
+                swFTPPasivo);
 
             Color c = Color.Green;
             if (!Ftp.FTPDescargaFichero(Application.Current.Properties["FTPCarpeta"] as string,

@@ -29,6 +29,8 @@ namespace AWPrint
         private double height;
         public static bool NetworkAvailable = true;
         public static Bluetooth3 BT3;
+        public static bool flagImpreso;
+        public static bool flagDosCopias;
 
         public ImpresionPage()
         {
@@ -105,20 +107,23 @@ namespace AWPrint
                 }
             }
 
-
-                lblStatus.Text = "";
-                // PASO 1 -> Descarga por FTP ----------------------------------------------------------
-                String sw = Application.Current.Properties["FTPSSL"] as string;
+            btnImprimirCopia.IsVisible = false;
+            lblStatus.Text = "";
+            // PASO 1 -> Descarga por FTP ----------------------------------------------------------
+            lblStatus.Text = "Descargando " + Application.Current.Properties["Fichero"];
+            lblStatus.BackgroundColor = Color.Gray;
+            String sw = Application.Current.Properties["FTPSSL"] as string;
                 Boolean swFTPSSL = (sw != "0");
+            String sw1 = Application.Current.Properties["FTPPasivo"] as string;
+            Boolean swFTPPasivo = (sw1 != "0");
                 Ftp = new FTP(Application.Current.Properties["FTPServer"] as string,
                         Application.Current.Properties["FTPUser"] as string,
                         Application.Current.Properties["FTPPassword"] as string,
                         swFTPSSL,
-                        Application.Current.Properties["FTPCarpeta"] as string);
+                        Application.Current.Properties["FTPCarpeta"] as string,
+                        swFTPPasivo);
 
 
-                lblStatus.Text = "Descargando " + Application.Current.Properties["Fichero"];
-                lblStatus.BackgroundColor = Color.Gray;
                 Console.WriteLine("paso 1");
                 if (!Ftp.FTPDescargaFichero(Application.Current.Properties["FTPCarpeta"] as string,
                     Application.Current.Properties["Fichero"] as string,
@@ -173,13 +178,13 @@ namespace AWPrint
             }
 
             string tipoDoc = "ALBARAN";
-            int nAlbaran = message.IndexOf("NRO ALBARAN");
+            int nAlbaran = message.IndexOf("ALBARAN");
             if (nAlbaran == -1) { nAlbaran = message.IndexOf("NRO FACTURA"); tipoDoc = "FACTURA"; }
             if (nAlbaran == -1) { nAlbaran = message.IndexOf("INFORME ALBA"); tipoDoc = "INFORME"; }
             string strAlbaran = "";
             if (nAlbaran > -1)
             {
-                strAlbaran = message.Substring(nAlbaran + 14, 12); // Extrae el albarán para mostrarlo en pantalla antes de imprimir
+                strAlbaran = message.Substring(nAlbaran + 8, 12); // Extrae el albarán para mostrarlo en pantalla antes de imprimir
             }
             else
             {
@@ -197,6 +202,21 @@ namespace AWPrint
             }
             btnDescargar.Text = tipoDoc + "\n" + strcAlbaran + "\n" + strAlbaran + "\n" + string.Format("Total: {0,8:#,###.00}", Convert.ToDecimal(strtAlbaran));
             lblStatus.Text = "";
+
+            // Modificación pedida el 03-07-07. Esto es nuevo.
+            // Y sobre lo de las dos copias, AHORA SE IMPRIME EN EL albaran.sec: Iva no incluido. Venta a credito CUANDO LA FORMA DE PAGO ES DISTINTA A LA 5,
+            //ASÍ QUE HEMOS QUEDADO QUE CUANDO APAREZCA ESE TEXTO, HACER QUE IMPRIMAN DOS COPIAS.
+            // PARA QUE NO SALGAN LAS DOS COPIAS SEGUIDAS, ME HA COMENTADO A VER SI SE PUEDE HACER QUE EN ESTOS CASOS, CUANDO PULSE EN EL AWPRINT A IMPRIMIR 
+            //SE IMPRIMA 1 COPIA, PERO QUE NO SE BORRE EL .SEC TODAVIA, PARA QUE PUEDA CORTAR EL PAPEL DE LA IMPRESORA DE ESA PRIMERA COPIA, 
+            //Y CUANDO LUEGO LE PULSE A IMPRIMIR LA SEGUNDA COPIA, SE IMPRIMA LA SEGUNDA Y ENTONCES SÍ QUE SE BORRE EL.SEC
+            flagDosCopias = false;
+            int tDosCopias = message.IndexOf("Venta a cr");
+            if (tDosCopias > -1)
+            {
+                flagDosCopias = true;
+                btnImprimirCopia.IsVisible = true;
+            }
+
             await z("");
 
         }
@@ -206,11 +226,63 @@ namespace AWPrint
             await Task.Delay(1);
         }
 
-        async void BtnImprimirClicked(object sender, System.EventArgs e)
+        void BtnImprimirClicked(object sender, System.EventArgs e)
+        {
+
+            imprimir();
+            if (flagImpreso) btnImprimirCopia.IsVisible = true;
+        }
+
+        void BtnImprimirCopiaClicked(object sender, System.EventArgs e)
+        {
+            imprimir();
+            if (flagImpreso)
+            {
+                btnImprimirCopia.IsVisible = false;
+                String camino = Application.Current.Properties["CaminoAFichero"] as string;
+                String fichero = Application.Current.Properties["Fichero"] as string;
+                String fileName = Path.Combine(camino, fichero);
+                if ((flagDosCopias==true) && (File.Exists(fileName)))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(fileName); // 14-02-19 Borra el fichero del albarán ya impreso en la segunda copia
+                    }
+                    catch (Exception ex)
+                    {
+                        lblStatus.Text = ex.Message;
+                        return;
+                    }
+                }
+            }
+
+        }
+
+
+
+        //protected override void OnSizeAllocated(double width, double height)
+        //{
+        //    base.OnSizeAllocated(width, height);
+        //    if (width != this.width || height != this.height)
+        //    {
+        //        this.width = width;
+        //        this.height = height;
+        //        if (width > height)
+        //        {
+        //            outerStack.Orientation = StackOrientation.Horizontal;
+        //        }
+        //        else
+        //        {
+        //            outerStack.Orientation = StackOrientation.Vertical;
+        //        }
+        //    }
+        //}
+
+        private async void imprimir ()
         {
 
             Color c = Color.Gray;
-
+            flagImpreso = false;
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino, fichero);
@@ -247,6 +319,7 @@ namespace AWPrint
             }
             else
             {
+                flagImpreso = true;
                 Console.WriteLine("paso 3");
                 //           BT.BluetoothEnviarFichero(camino, fileName, impresora);
                 Console.WriteLine("vuelta aaaaaa");
@@ -255,11 +328,11 @@ namespace AWPrint
                 lblStatus.Text = "Albarán impreso";
                 btnDescargar.Text = "Descargar albarán";
 
-                if (File.Exists(fileName))
+                if ((flagDosCopias==false) &&  (File.Exists(fileName)))
                 {
                     try
                     {
-                        System.IO.File.Delete(fileName); // 14-02-19 Borra el fichero del albarán ya impreso
+                        System.IO.File.Delete(fileName); // 14-02-19 Borra el fichero del albarán ya impreso solo si no es con segunda copia
                     }
                     catch (Exception ex)
                     {
@@ -298,26 +371,6 @@ namespace AWPrint
 
 
         }
-
-
-        //protected override void OnSizeAllocated(double width, double height)
-        //{
-        //    base.OnSizeAllocated(width, height);
-        //    if (width != this.width || height != this.height)
-        //    {
-        //        this.width = width;
-        //        this.height = height;
-        //        if (width > height)
-        //        {
-        //            outerStack.Orientation = StackOrientation.Horizontal;
-        //        }
-        //        else
-        //        {
-        //            outerStack.Orientation = StackOrientation.Vertical;
-        //        }
-        //    }
-        //}
-
 
     }
 }

@@ -13,19 +13,21 @@ namespace AWPrint.Services
         private static String mFTPPassword = null;
         private static String mFTPCarpeta = null;
         private static Boolean mFTPSSL = false;
+        private static Boolean mFTPPasivo = false;
         public Boolean estado = false;
         public String mensaje = "";
         public static String cori = "";
         public static String cdes = "";
         public static String fdes = "";
 
-        public FTP(String FTPServer, String FTPUser, String FTPPassword, Boolean FTPSSL, String FTPCarpeta)
+        public FTP(String FTPServer, String FTPUser, String FTPPassword, Boolean FTPSSL, String FTPCarpeta,Boolean FTPPasivo)
         {
             mFTPServer = FTPServer;
             mFTPUser = FTPUser;
             mFTPPassword = FTPPassword;
             mFTPCarpeta = FTPCarpeta;
             mFTPSSL = FTPSSL;
+            mFTPPasivo = FTPPasivo;
         }
 
         private Boolean FTPValida()
@@ -129,7 +131,7 @@ namespace AWPrint.Services
             request.Timeout = 30000;
             request.ReadWriteTimeout = 30000;
             request.KeepAlive = true;
-            request.UsePassive = false;
+            request.UsePassive = mFTPPasivo;
                     
             try
             {

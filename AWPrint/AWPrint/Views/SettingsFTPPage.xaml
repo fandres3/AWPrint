@@ -31,6 +31,10 @@
                     <Label Text="FTP SSL" FontSize="Small" HorizontalOptions="Start"/>
                     <Switch x:Name="swFTPSSL" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Modo Pasivo" FontSize="Small" HorizontalOptions="Start"/>
+                <Switch x:Name="swFTPPasivo" HorizontalOptions="EndAndExpand"></Switch>
+            </StackLayout>
             <StackLayout  Orientation="Horizontal">
                 <Button Text="Test FTP" Clicked="BtnPruebaFTPClicked" HorizontalOptions="CenterAndExpand" BackgroundColor="WhiteSmoke"></Button>
                 <Button Text="Test Impresión" Clicked="BtnPruebaImpresionClickedAsync" HorizontalOptions="CenterAndExpand" BackgroundColor="WhiteSmoke"></Button>
