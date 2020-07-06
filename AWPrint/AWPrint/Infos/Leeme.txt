@@ -35,3 +35,13 @@ First, you need to add these two packages Xam.Plugin.Connectivity , plugin.wifii
 https://forums.xamarin.com/discussion/96509/internet-connection
 
 Xamarin.Essentials 
+
+
+EN LA OFICINA
+
+E:\net\Android\keystores\android.jks
+
+EN CASA
+
+K:\OFICINA LOCAL\......
+

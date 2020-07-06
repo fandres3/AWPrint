@@ -12,7 +12,7 @@ using Plugin.Connectivity.Abstractions;
 
 namespace AWPrint.Droid
 {
-    [Activity(Label = "AWPrint", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "AWPrintV2", Icon = "@drawable/FRESCOFRIO_AZUL", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)

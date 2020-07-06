@@ -5,35 +5,30 @@
              Title="Albarán">
     <ContentPage.Content>
 
-        <StackLayout x:Name="outerStack" Margin="5,20,5,5"   Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                     > 
+        <StackLayout x:Name="outerStack" Margin="2,20,2,2" Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Label Text="v2.0"></Label>
             <Image Source="FRESCOFRIO_AZUL.png"/>
             <ScrollView>
-                <StackLayout Margin="5,5"  HorizontalOptions="FillAndExpand">
+                <StackLayout Margin="2,2"  HorizontalOptions="FillAndExpand">
                     <StackLayout  Orientation="Vertical" HorizontalOptions="FillAndExpand">
                         <Button x:Name="btnDescargar"  Text="Albarán a imprimir"
-                    Clicked="BtnDescargarClicked" BackgroundColor="LightGray" Image="ic_launcher.png"/>
+                    Clicked="BtnDescargarClicked" BackgroundColor="YellowGreen" Image="ic_launcher.png"/>
                     </StackLayout>
-
-
                 </StackLayout>
-
-
             </ScrollView>
             <ScrollView>
                 <StackLayout Margin="5,5"  HorizontalOptions="FillAndExpand">
 
-                    <StackLayout  Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                    <StackLayout Margin="5,5" Orientation="Vertical" HorizontalOptions="FillAndExpand">
                         <Button  Text="Imprimir"
-                    Clicked="BtnImprimirClicked" BackgroundColor="LightGray" Image="ic_launcher.png"/>
+                    Clicked="BtnImprimirClicked" BackgroundColor="YellowGreen" Image="ic_launcher.png"/>
                     </StackLayout>
 
-                    <StackLayout  Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                    <StackLayout Margin="5,5" Orientation="Vertical" HorizontalOptions="FillAndExpand">
                         <Button  Text="Imprimir Copia" x:Name="btnImprimirCopia" IsVisible="false"
                     Clicked="BtnImprimirCopiaClicked" BackgroundColor="YellowGreen" Image="ic_launcher.png"/>
                     </StackLayout>
                 </StackLayout>
-
 
             </ScrollView>
             <StackLayout Margin="0,0,0,0"  VerticalOptions="EndAndExpand" Orientation="Vertical"
