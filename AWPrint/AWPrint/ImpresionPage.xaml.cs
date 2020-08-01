@@ -205,10 +205,10 @@ namespace AWPrint
 
             // Modificación pedida el 03-07-07. Esto es nuevo.
             // Y sobre lo de las dos copias, AHORA SE IMPRIME EN EL albaran.sec: Iva no incluido. Venta a credito CUANDO LA FORMA DE PAGO ES DISTINTA A LA 5,
-            //ASÍ QUE HEMOS QUEDADO QUE CUANDO APAREZCA ESE TEXTO, HACER QUE IMPRIMAN DOS COPIAS.
+            // ASÍ QUE HEMOS QUEDADO QUE CUANDO APAREZCA ESE TEXTO, HACER QUE IMPRIMAN DOS COPIAS.
             // PARA QUE NO SALGAN LAS DOS COPIAS SEGUIDAS, ME HA COMENTADO A VER SI SE PUEDE HACER QUE EN ESTOS CASOS, CUANDO PULSE EN EL AWPRINT A IMPRIMIR 
-            //SE IMPRIMA 1 COPIA, PERO QUE NO SE BORRE EL .SEC TODAVIA, PARA QUE PUEDA CORTAR EL PAPEL DE LA IMPRESORA DE ESA PRIMERA COPIA, 
-            //Y CUANDO LUEGO LE PULSE A IMPRIMIR LA SEGUNDA COPIA, SE IMPRIMA LA SEGUNDA Y ENTONCES SÍ QUE SE BORRE EL.SEC
+            // SE IMPRIMA 1 COPIA, PERO QUE NO SE BORRE EL .SEC TODAVIA, PARA QUE PUEDA CORTAR EL PAPEL DE LA IMPRESORA DE ESA PRIMERA COPIA, 
+            // Y CUANDO LUEGO LE PULSE A IMPRIMIR LA SEGUNDA COPIA, SE IMPRIMA LA SEGUNDA Y ENTONCES SÍ QUE SE BORRE EL.SEC
             flagDosCopias = false;
             int tDosCopias = message.IndexOf("Venta a cr");
             if (tDosCopias > -1)
@@ -236,6 +236,8 @@ namespace AWPrint
         void BtnImprimirCopiaClicked(object sender, System.EventArgs e)
         {
             imprimir();
+            // Esta linea para emular que el albarán se ha impreso correctamente (para pruebas aunque no se disponga de impresora)
+            // flagImpreso = true;
             if (flagImpreso)
             {
                 btnImprimirCopia.IsVisible = false;
@@ -311,7 +313,7 @@ namespace AWPrint
 
             Thread.Sleep(1000);
             if (BT.estado == false)
-            {
+                {
                 c = Color.Red;
                 lblStatus.BackgroundColor = c;
                 lblStatus.Text = BT.mensaje;
@@ -340,11 +342,7 @@ namespace AWPrint
                         return;
                     }
                 }
-
-
             }
-
-
 
             //BT = new Bluetooth(impresora);
             //BT.BluetoothConecta(impresora);

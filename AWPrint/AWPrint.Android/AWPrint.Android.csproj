@@ -39,7 +39,7 @@
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-    <AndroidSigningKeyStore>E:\net\Android\keystores\android.jks</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>K:\OFICINA\Android\keystores\android.jks</AndroidSigningKeyStore>
     <AndroidDexTool>dx</AndroidDexTool>
     <AndroidLinkTool>r8</AndroidLinkTool>
   </PropertyGroup>

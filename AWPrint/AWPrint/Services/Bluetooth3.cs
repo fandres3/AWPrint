@@ -42,6 +42,9 @@ namespace AWPrint.Services
 
         public async Task ImprimeBluetooth(String nombreDispositivo, String carpetaAFichero, String fichero)
         {
+            // Estas dos lineas para emular que la impresión a sido correcta (para pruebas sin tener impresora)
+            // estado = true;
+            // return;
             mAdapter = BluetoothAdapter.DefaultAdapter;
             if (mAdapter == null) { estado = false; return; }
 
