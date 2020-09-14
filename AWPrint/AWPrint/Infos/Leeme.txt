@@ -1,4 +1,17 @@
-﻿MasterDetail
+﻿
+
+Firma de paquete Android en la oficina
+
+E:\net\Android\keystores\android.jks
+
+En casa:
+
+K:\OFICINA\Android\keystores\android.jks
+
+
+
+
+MasterDetail
 https://www.youtube.com/watch?v=9NXd128URxo
 
 Iconos 22

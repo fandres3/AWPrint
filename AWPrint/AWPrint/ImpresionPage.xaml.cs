@@ -15,7 +15,7 @@ using System.IO;
 using AWPrint.Services;
 using System.Threading;
 using Xamarin.Essentials;
-
+using System.Runtime.CompilerServices;
 
 namespace AWPrint
 {
@@ -110,12 +110,18 @@ namespace AWPrint
             btnImprimirCopia.IsVisible = false;
             lblStatus.Text = "";
             // PASO 1 -> Descarga por FTP ----------------------------------------------------------
-            lblStatus.Text = "Descargando " + Application.Current.Properties["Fichero"];
-            lblStatus.BackgroundColor = Color.Gray;
-            String sw = Application.Current.Properties["FTPSSL"] as string;
+            // ---- Para pruebas, sin bajar el fichero del FTP. 
+            // ---- Coge el fichero local que se encuentre en el terminal
+            Boolean ficheroLocal = false; 
+            // ----
+            if (ficheroLocal == false)
+            {
+                lblStatus.Text = "Descargando " + Application.Current.Properties["Fichero"];
+                lblStatus.BackgroundColor = Color.Gray;
+                String sw = Application.Current.Properties["FTPSSL"] as string;
                 Boolean swFTPSSL = (sw != "0");
-            String sw1 = Application.Current.Properties["FTPPasivo"] as string;
-            Boolean swFTPPasivo = (sw1 != "0");
+                String sw1 = Application.Current.Properties["FTPPasivo"] as string;
+                Boolean swFTPPasivo = (sw1 != "0");
                 Ftp = new FTP(Application.Current.Properties["FTPServer"] as string,
                         Application.Current.Properties["FTPUser"] as string,
                         Application.Current.Properties["FTPPassword"] as string,
@@ -135,11 +141,15 @@ namespace AWPrint
                     lblStatus.Text = Ftp.mensaje;
                     return;
                 }
-
+                lblStatus.Text = "Descargado";
+            }
+            else
+            {
+                lblStatus.Text = "Fichero local. Sin FTP.";
+            }
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            lblStatus.Text = "Descargado";
             String camino = Application.Current.Properties["CaminoAFichero"] as string;
             String fichero = Application.Current.Properties["Fichero"] as string;
             String fileName = Path.Combine(camino, fichero);
@@ -216,6 +226,10 @@ namespace AWPrint
                 flagDosCopias = true;
                 btnImprimirCopia.IsVisible = true;
             }
+            else
+            {
+                btnImprimirCopia.IsVisible = false;
+            }
 
             await z("");
 
@@ -229,15 +243,13 @@ namespace AWPrint
         void BtnImprimirClicked(object sender, System.EventArgs e)
         {
 
-            imprimir();
-            if (flagImpreso) btnImprimirCopia.IsVisible = true;
+            imprimir(false); // imprimir(true) no hace impresión y devuelve flagImpreso = true
+            if ((flagImpreso) && (flagDosCopias == true)) btnImprimirCopia.IsVisible = true;
         }
 
         void BtnImprimirCopiaClicked(object sender, System.EventArgs e)
         {
-            imprimir();
-            // Esta linea para emular que el albarán se ha impreso correctamente (para pruebas aunque no se disponga de impresora)
-            // flagImpreso = true;
+            imprimir(false); // imprimir(true) no hace impresión y devuelve flagImpreso = true
             if (flagImpreso)
             {
                 btnImprimirCopia.IsVisible = false;
@@ -280,9 +292,9 @@ namespace AWPrint
         //    }
         //}
 
-        private async void imprimir ()
+        private async void imprimir (Boolean test)
         {
-
+            if (test) { flagImpreso = true; return; }
             Color c = Color.Gray;
             flagImpreso = false;
             String camino = Application.Current.Properties["CaminoAFichero"] as string;

@@ -6,7 +6,7 @@
     <ContentPage.Content>
 
         <StackLayout x:Name="outerStack" Margin="2,20,2,2" Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-            <Label Text="v2.0"></Label>
+            <Label Text="v2.1"></Label>
             <Image Source="FRESCOFRIO_AZUL.png"/>
             <ScrollView>
                 <StackLayout Margin="2,2"  HorizontalOptions="FillAndExpand">
