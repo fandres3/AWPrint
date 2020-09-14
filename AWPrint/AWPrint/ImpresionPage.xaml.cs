@@ -244,7 +244,25 @@ namespace AWPrint
         {
 
             imprimir(false); // imprimir(true) no hace impresión y devuelve flagImpreso = true
-            if ((flagImpreso) && (flagDosCopias == true)) btnImprimirCopia.IsVisible = true;
+            if (flagImpreso == false) return;
+            if (flagDosCopias == true) { btnImprimirCopia.IsVisible = true; return; }
+
+            // Borra albaran.sec cuando es una copia
+            String camino = Application.Current.Properties["CaminoAFichero"] as string;
+            String fichero = Application.Current.Properties["Fichero"] as string;
+            String fileName = Path.Combine(camino, fichero);
+            if (File.Exists(fileName))
+            {
+                try
+                {
+                    System.IO.File.Delete(fileName); 
+                }
+                catch (Exception ex)
+                {
+                    lblStatus.Text = ex.Message;
+                    return;
+                }
+            }
         }
 
         void BtnImprimirCopiaClicked(object sender, System.EventArgs e)
@@ -294,6 +312,8 @@ namespace AWPrint
 
         private async void imprimir (Boolean test)
         {
+         
+
             if (test) { flagImpreso = true; return; }
             Color c = Color.Gray;
             flagImpreso = false;
